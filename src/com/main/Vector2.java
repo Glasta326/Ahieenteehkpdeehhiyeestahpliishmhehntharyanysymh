@@ -1,4 +1,4 @@
-package com.company;
+package com.main;
 
 public class Vector2 {
     private int x;
