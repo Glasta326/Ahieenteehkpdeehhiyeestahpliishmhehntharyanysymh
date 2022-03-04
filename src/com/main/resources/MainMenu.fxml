@@ -12,7 +12,7 @@
                 <Font name="Juice ITC" size="73.0" />
             </font>
         </Label>
-        <Button layoutX="579.0" layoutY="340.0" onAction="#onHelloButtonClick" prefHeight="41.0" prefWidth="123.0" text="New Game" textAlignment="CENTER" />
+        <Button layoutX="579.0" layoutY="340.0" onAction="#onStartGameButtonClick" prefHeight="41.0" prefWidth="123.0" text="New Game" textAlignment="CENTER" />
         <Label fx:id="welcomeText" layoutX="99.0" layoutY="535.0" prefHeight="93.0" prefWidth="1083.0" textAlignment="CENTER">
             <font>
                 <Font name="Juice ITC" size="73.0" />

@@ -7,17 +7,21 @@ import java.util.Scanner;
 import java.lang.Integer;
 
 public class GameHandler {
-    static int playerCount = 0;
+    int playerCount = 0;
 
     public static void main(String[] args) throws IOException {
         Application.launch(GraphicsSetup.class, args);
     }
 
-    public static void initialise(){
+    public void initialise(){
         Scanner scanner = new Scanner(System.in);
         playerCount = Integer.parseInt(scanner.nextLine());
         System.out.println(playerCount);
         for (int i = 0; i < playerCount; i++) {
         }
+    }
+
+    public void updatePlayers(int numPlayers){
+
     }
 }
