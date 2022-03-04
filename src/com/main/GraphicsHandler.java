@@ -20,7 +20,6 @@ public class GraphicsHandler {
 
     @FXML
     protected void onHelloButtonClick(ActionEvent event) throws IOException {
-        Object node = event.getSource();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/PlayerSelect.fxml"));
         Scene scene = new Scene((Parent)fxmlLoader.load(), 1120.0D, 630.0D);
