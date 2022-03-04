@@ -1,4 +1,4 @@
-module com.main.graphics {
+module com.main {
     requires javafx.controls;
     requires javafx.fxml;
 

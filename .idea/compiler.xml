@@ -9,7 +9,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Graphics" target="17" />
+      <module name="Graphics" target="1.5" />
+      <module name="GraphicsModule" target="1.5" />
+      <module name="GraphicsStuff" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

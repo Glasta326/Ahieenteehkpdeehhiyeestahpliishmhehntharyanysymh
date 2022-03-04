@@ -18,7 +18,6 @@ public class GameHandler {
         playerCount = Integer.parseInt(scanner.nextLine());
         System.out.println(playerCount);
         for (int i = 0; i < playerCount; i++) {
-
         }
     }
 }
