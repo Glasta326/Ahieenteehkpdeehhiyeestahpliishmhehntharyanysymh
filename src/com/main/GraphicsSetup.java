@@ -12,7 +12,7 @@ public class GraphicsSetup extends Application {
 
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsSetup.class.getResource("resources/MainMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1120.0D, 630.0D);
+        Scene scene = new Scene(fxmlLoader.load(), 1440.0D, 810.0D);
         primaryStage.setTitle("Animalopoly!");
         primaryStage.setScene(scene);
         primaryStage.show();

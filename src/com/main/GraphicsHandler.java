@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 import javafx.stage.Stage;
 
 public class GraphicsHandler {
@@ -17,6 +20,8 @@ public class GraphicsHandler {
     public Label player2;
     public Label player3;
     public Label player4;
+    public Label die1;
+    public Label die2;
     public Button removePlayer;
     public Button cont;
 
@@ -29,7 +34,7 @@ public class GraphicsHandler {
     protected void onStartGameButtonClick(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/PlayerSelect.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1120.0D, 630.0D);
+        Scene scene = new Scene(fxmlLoader.load(), 1440.0D, 810.0D);
         stage.setScene(scene);
     }
 
@@ -68,8 +73,19 @@ public class GraphicsHandler {
     }
 
     @FXML
-    protected void continueToGame() {
-
+    protected void continueToGame(ActionEvent event) throws IOException {
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/GameBoard.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1440.0D, 810.0D);
+        stage.setScene(scene);
     }
 
+    @FXML
+    protected void rollDice() throws InterruptedException {
+        int diceNumber;
+        diceNumber = GameHandler.Rolldice();
+        die1.setText(Integer.toString(diceNumber));
+        diceNumber = GameHandler.Rolldice();
+        die2.setText(Integer.toString(diceNumber));
+    }
 }

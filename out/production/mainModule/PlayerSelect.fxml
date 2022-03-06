@@ -5,33 +5,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1170.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GraphicsHandler">
-    <Label fx:id="Title" layoutX="443.0" layoutY="14.0" prefHeight="93.0" prefWidth="262.0" text="Animalopoly" textAlignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.GraphicsHandler">
+    <Label fx:id="Title" layoutX="589.0" layoutY="14.0" prefHeight="93.0" prefWidth="262.0" text="Animalopoly" textAlignment="CENTER">
         <font>
             <Font name="Juice ITC" size="73.0" />
         </font>
     </Label>
-    <Label fx:id="player1" layoutX="80.0" layoutY="180.0" opacity="0.0" prefHeight="57.0" prefWidth="182.0" text="Player 1" textAlignment="CENTER">
+    <Label id="player1" fx:id="player1" layoutX="115.0" layoutY="177.0" opacity="0.0" prefHeight="70.0" prefWidth="218.0" text="Player 1" textAlignment="CENTER">
         <font>
-            <Font name="MT Extra" size="48.0" />
+            <Font name="MT Extra" size="60.0" />
         </font>
     </Label>
-    <Button layoutX="480.0" layoutY="119.0" mnemonicParsing="false" onAction="#addPlayerButton" prefHeight="41.0" prefWidth="188.0" text="Add Player" />
-    <Label fx:id="player2" layoutX="356.0" layoutY="180.0" opacity="0.0" prefHeight="57.0" prefWidth="182.0" text="Player 2" textAlignment="CENTER">
-        <font>
-          <Font name="MT Extra" size="48.0" />
-        </font>
-    </Label>
-    <Label fx:id="player3" layoutX="618.0" layoutY="180.0" opacity="0.0" prefHeight="57.0" prefWidth="182.0" text="Player 3" textAlignment="CENTER">
-        <font>
-          <Font name="MT Extra" size="48.0" />
-        </font>
-    </Label>
-    <Label fx:id="player4" layoutX="890.0" layoutY="180.0" opacity="0.0" prefHeight="57.0" prefWidth="182.0" text="Player 4" textAlignment="CENTER">
-        <font>
-          <Font name="MT Extra" size="48.0" />
-        </font>
-    </Label>
-   <Button fx:id="removePlayer" onAction="#removePlayerButton" disable="true" layoutX="680.0" layoutY="119.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" text="Remove Player" />
-   <Button fx:id="cont"  disable="true" layoutX="480.0" layoutY="575.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" text="Continue" />
+    <Button layoutX="626.0" layoutY="116.0" mnemonicParsing="false" onAction="#addPlayerButton" prefHeight="41.0" prefWidth="188.0" text="Add Player" />
+   <Button fx:id="removePlayer" disable="true" layoutX="855.0" layoutY="116.0" mnemonicParsing="false" onAction="#removePlayerButton" prefHeight="41.0" prefWidth="188.0" text="Remove Player" />
+   <Button fx:id="cont" disable="true" layoutX="626.0" layoutY="754.0" mnemonicParsing="false" onAction="#continueToGame" prefHeight="41.0" prefWidth="188.0" text="Continue" />
+   <Label id="player2" fx:id="player2" layoutX="451.0" layoutY="177.0" opacity="0.0" prefHeight="70.0" prefWidth="218.0" text="Player 2" textAlignment="CENTER">
+      <font>
+         <Font name="MT Extra" size="60.0" />
+      </font>
+   </Label>
+   <Label id="player3" fx:id="player3" layoutX="774.0" layoutY="177.0" opacity="0.0" prefHeight="70.0" prefWidth="218.0" text="Player 3" textAlignment="CENTER">
+      <font>
+         <Font name="MT Extra" size="60.0" />
+      </font>
+   </Label>
+   <Label id="player4" fx:id="player4" layoutX="1094.0" layoutY="177.0" opacity="0.0" prefHeight="70.0" prefWidth="218.0" text="Player 4" textAlignment="CENTER">
+      <font>
+         <Font name="MT Extra" size="60.0" />
+      </font>
+   </Label>
 </AnchorPane>
