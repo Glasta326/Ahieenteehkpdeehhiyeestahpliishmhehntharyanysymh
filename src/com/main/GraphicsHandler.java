@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +24,7 @@ public class GraphicsHandler {
     public Label die2;
     public Button removePlayer;
     public Button cont;
+    public Button addPlayer;
 
     int playerCount;
     public GraphicsHandler() {
@@ -35,7 +35,7 @@ public class GraphicsHandler {
     protected void onStartGameButtonClick(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/PlayerSelect.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1440.0D, 810.0D);
+        Scene scene = new Scene(fxmlLoader.load(), 1280.0D, 720.0D);
         stage.setScene(scene);
     }
 
@@ -52,7 +52,10 @@ public class GraphicsHandler {
                 cont.setDisable(false);
             }
             case 3 -> player3.setOpacity(1);
-            case 4 -> player4.setOpacity(1);
+            case 4 -> {
+                player4.setOpacity(1);
+                addPlayer.setDisable(true);
+            }
         }
     }
 
@@ -68,17 +71,20 @@ public class GraphicsHandler {
                 cont.setDisable(true);
             }
             case 3 -> player3.setOpacity(0);
-            case 4 -> player4.setOpacity(0);
+            case 4 -> {
+                player4.setOpacity(0);
+                addPlayer.setDisable(false);
+            }
         }
         playerCount -= 1;
     }
 
     @FXML
-    protected void continueToGame(ActionEvent event) throws IOException, URISyntaxException {
+    protected void continueToGame(ActionEvent event) throws IOException {
         GameHandler.gameSetup();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/GameBoard.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1440.0D, 810.0D);
+        Scene scene = new Scene(fxmlLoader.load(), 1280.0D, 720.0D);
         stage.setScene(scene);
     }
 
