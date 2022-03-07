@@ -7,12 +7,10 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
-import java.util.Scanner;
 
 public class GameHandler {
     public static final String delimiter = ",";
     public static ArrayList<Tile> tiles;
-    //fdfdf
 
     public static void main(String[] args) {
         Application.launch(GraphicsSetup.class, args);
@@ -36,7 +34,5 @@ public class GameHandler {
         while((line = br.readLine()) != null) {
             Arr = line.split(delimiter);
         }
-
-
     }
 }
