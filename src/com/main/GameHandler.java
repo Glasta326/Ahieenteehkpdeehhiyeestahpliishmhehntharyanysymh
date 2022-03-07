@@ -3,7 +3,9 @@ package com.main;
 import javafx.application.Application;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -23,15 +25,17 @@ public class GameHandler {
         return randomNumber;
     }
 
-    public static void gameSetup() throws IOException {
-        File file = new File("resources/data/Areas.csv");
+    public static void gameSetup() throws IOException, URISyntaxException {
+        File root = new File(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("data")).toURI());
+        File file = new File(root, "Areas.csv");
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
         String line = "";
-        String[] tempArr;
+        String[] Arr;
         while((line = br.readLine()) != null) {
-            tempArr = line.split(delimiter);
-
+            Arr = line.split(delimiter);
         }
+
+
     }
 }
