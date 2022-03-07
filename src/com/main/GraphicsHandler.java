@@ -1,5 +1,7 @@
 package com.main;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,24 +13,36 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class GraphicsHandler {
-    public ObservableList<String> animals = FXCollections.observableArrayList("Cow", "Pig", "Penguin", "Sloth", "Hallucigenia", "Blue Dragon", "Basilisk", "Probiscis Monkey");
+    public ObservableList<String> animals = FXCollections.observableArrayList("Cow", "Pig", "Penguin", "Sloth", "Hallucigenia", "Blue Dragon", "Basilisk", "Probiscus Monkey");
     public Label Title;
-    public Label player1;
-    public Label player2;
-    public Label player3;
-    public Label player4;
+    public AnchorPane player1;
+    public AnchorPane player2;
+    public AnchorPane player3;
+    public AnchorPane player4;
     public Label die1;
     public Label die2;
     public Button removePlayer;
     public Button cont;
     public Button addPlayer;
-    public ChoiceBox<String> animalChoiceBox;
+    public ChoiceBox<String> animalChoiceBox1;
+    public ChoiceBox<String> animalChoiceBox2;
+    public ChoiceBox<String> animalChoiceBox3;
+    public ChoiceBox<String> animalChoiceBox4;
+    public ImageView animalImage1;
+    public ImageView animalImage2;
+    public ImageView animalImage3;
+    public ImageView animalImage4;
 
     int playerCount;
     public GraphicsHandler() {
@@ -46,20 +60,25 @@ public class GraphicsHandler {
 
     @FXML
     protected void addPlayerButton() {
-        animalChoiceBox.setItems(animals);
         playerCount += 1;
         switch (playerCount) {
             case 1 -> {
                 player1.setOpacity(1);
+                animalChoiceBox1.setItems(animals);
                 removePlayer.setDisable(false);
             }
             case 2 -> {
                 player2.setOpacity(1);
+                animalChoiceBox2.setItems(animals);
                 cont.setDisable(false);
             }
-            case 3 -> player3.setOpacity(1);
+            case 3 -> {
+                player3.setOpacity(1);
+                animalChoiceBox3.setItems(animals);
+            }
             case 4 -> {
                 player4.setOpacity(1);
+                animalChoiceBox4.setItems(animals);
                 addPlayer.setDisable(true);
             }
         }
@@ -102,4 +121,29 @@ public class GraphicsHandler {
         diceNumber = GameHandler.Rolldice();
         die2.setText(Integer.toString(diceNumber));
     }
+
+    @FXML
+    protected void changeImage(ActionEvent event) throws URISyntaxException {
+        String boxName = ((Node) event.getSource()).getId();
+        Image img;
+        switch (boxName){
+            case "animalChoiceBox1":
+                img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox1.getValue() + ".jpg");
+                animalImage1.setImage(img);
+                break;
+            case "animalChoiceBox2":
+                img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox2.getValue() + ".jpg");
+                animalImage2.setImage(img);
+                break;
+            case "animalChoiceBox3":
+                img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox3.getValue() + ".jpg");
+                animalImage3.setImage(img);
+                break;
+            case "animalChoiceBox4":
+                img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox4.getValue() + ".jpg");
+                animalImage4.setImage(img);
+                break;
+        }
+    }
+
 }
