@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class GameHandler {
     public static final String delimiter = ",";
     public static ArrayList<Tile> tiles;
+    //fdfdf
 
     public static void main(String[] args) {
         Application.launch(GraphicsSetup.class, args);
