@@ -1,21 +1,23 @@
 package com.main;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import javafx.stage.Stage;
 
 public class GraphicsHandler {
+    public ObservableList<String> animals = FXCollections.observableArrayList("Cow", "Pig", "Penguin", "Sloth", "Hallucigenia", "Blue Dragon", "Basilisk", "Probiscis Monkey");
     public Label Title;
     public Label player1;
     public Label player2;
@@ -26,6 +28,7 @@ public class GraphicsHandler {
     public Button removePlayer;
     public Button cont;
     public Button addPlayer;
+    public ChoiceBox<String> animalChoiceBox;
 
     int playerCount;
     public GraphicsHandler() {
@@ -38,10 +41,12 @@ public class GraphicsHandler {
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/PlayerSelect.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280.0D, 720.0D);
         stage.setScene(scene);
+
     }
 
     @FXML
     protected void addPlayerButton() {
+        animalChoiceBox.setItems(animals);
         playerCount += 1;
         switch (playerCount) {
             case 1 -> {
