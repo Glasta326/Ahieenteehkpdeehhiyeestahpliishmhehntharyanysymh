@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -80,7 +81,7 @@ public class GraphicsHandler {
     }
 
     @FXML
-    protected void continueToGame(ActionEvent event) throws IOException {
+    protected void continueToGame(ActionEvent event) throws IOException, URISyntaxException {
         GameHandler.gameSetup();
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/GameBoard.fxml"));
