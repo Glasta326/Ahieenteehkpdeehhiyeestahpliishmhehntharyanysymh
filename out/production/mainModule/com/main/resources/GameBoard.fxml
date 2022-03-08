@@ -32,4 +32,12 @@
          <Font name="System Bold" size="40.0" />
       </font>
    </Label>
+   <ImageView fx:id="playerChar1" fitHeight="30.0" fitWidth="30.0" layoutX="605.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+   </ImageView>
+   <ImageView fx:id="playerChar2" fitHeight="30.0" fitWidth="30.0" layoutX="595.0" layoutY="45.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+   </ImageView>
+   <ImageView fx:id="playerChar3" fitHeight="30.0" fitWidth="30.0" layoutX="585.0" layoutY="45.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+   </ImageView>
+   <ImageView fx:id="playerChar4" fitHeight="30.0" fitWidth="30.0" layoutX="575.0" layoutY="45.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+   </ImageView>
 </AnchorPane>

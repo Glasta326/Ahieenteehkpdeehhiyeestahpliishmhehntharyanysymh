@@ -17,71 +17,59 @@
    <Button fx:id="removePlayer" disable="true" layoutX="774.0" layoutY="116.0" mnemonicParsing="false" onAction="#removePlayerButton" prefHeight="41.0" prefWidth="188.0" text="Remove Player" />
    <Button fx:id="cont" disable="true" layoutX="546.0" layoutY="665.0" mnemonicParsing="false" onAction="#continueToGame" prefHeight="41.0" prefWidth="188.0" text="Continue" />
    <AnchorPane fx:id="player1" layoutX="135.0" layoutY="176.0" opacity="0.0" prefHeight="410.0" prefWidth="230.0">
-      <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 1" textAlignment="CENTER"
-             wrapText="true">
+      <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 1" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="MT Extra" size="48.0"/>
+            <Font name="MT Extra" size="48.0" />
          </font>
       </Label>
-      <ChoiceBox id="animalChoiceBox1" fx:id="animalChoiceBox1" onAction="#changeImage" layoutX="31.0" layoutY="159.0" prefHeight="42.0"
-                 prefWidth="167.0"/>
+      <ChoiceBox id="animalChoiceBox1" fx:id="animalChoiceBox1" layoutX="31.0" layoutY="159.0" onAction="#changeImage" prefHeight="42.0" prefWidth="167.0" />
       <Label layoutX="35.0" layoutY="89.0" prefHeight="70.0" prefWidth="160.0" text="Choose Animal" wrapText="true">
          <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="animalImage1" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true"
-                 preserveRatio="true"/>
+      <ImageView fx:id="animalImage1" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
    </AnchorPane>
    <AnchorPane fx:id="player2" layoutX="394.0" layoutY="176.0" opacity="0.0" prefHeight="410.0" prefWidth="230.0">
-      <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 2" textAlignment="CENTER"
-             wrapText="true">
+      <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 2" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="MT Extra" size="48.0"/>
+            <Font name="MT Extra" size="48.0" />
          </font>
       </Label>
-      <ChoiceBox id="animalChoiceBox2" fx:id="animalChoiceBox2" onAction="#changeImage" layoutX="31.0" layoutY="159.0" prefHeight="42.0"
-                 prefWidth="167.0"/>
+      <ChoiceBox id="animalChoiceBox2" fx:id="animalChoiceBox2" layoutX="31.0" layoutY="159.0" onAction="#changeImage" prefHeight="42.0" prefWidth="167.0" />
       <Label layoutX="35.0" layoutY="89.0" prefHeight="70.0" prefWidth="160.0" text="Choose Animal" wrapText="true">
          <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="animalImage2" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true"
-                 preserveRatio="true"/>
+      <ImageView fx:id="animalImage2" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
    </AnchorPane>
    <AnchorPane fx:id="player3" layoutX="656.0" layoutY="176.0" opacity="0.0" prefHeight="410.0" prefWidth="230.0">
-      <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 3" textAlignment="CENTER"
-             wrapText="true">
+      <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 3" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="MT Extra" size="48.0"/>
+            <Font name="MT Extra" size="48.0" />
          </font>
       </Label>
-      <ChoiceBox id="animalChoiceBox3" fx:id="animalChoiceBox3" onAction="#changeImage" layoutX="31.0" layoutY="159.0" prefHeight="42.0"
-                 prefWidth="167.0"/>
+      <ChoiceBox id="animalChoiceBox3" fx:id="animalChoiceBox3" layoutX="31.0" layoutY="159.0" onAction="#changeImage" prefHeight="42.0" prefWidth="167.0" />
       <Label layoutX="35.0" layoutY="89.0" prefHeight="70.0" prefWidth="160.0" text="Choose Animal" wrapText="true">
          <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="animalImage3" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true"
-                 preserveRatio="true"/>
+      <ImageView fx:id="animalImage3" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
    </AnchorPane>
    <AnchorPane fx:id="player4" layoutX="923.0" layoutY="176.0" opacity="0.0" prefHeight="410.0" prefWidth="230.0">
-      <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 4" textAlignment="CENTER"
-             wrapText="true">
+      <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 4" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="MT Extra" size="48.0"/>
+            <Font name="MT Extra" size="48.0" />
          </font>
       </Label>
-      <ChoiceBox id="animalChoiceBox4" fx:id="animalChoiceBox4" onAction="#changeImage" layoutX="31.0" layoutY="159.0" prefHeight="42.0"
-                 prefWidth="167.0"/>
+      <ChoiceBox id="animalChoiceBox4" fx:id="animalChoiceBox4" layoutX="31.0" layoutY="159.0" onAction="#changeImage" prefHeight="42.0" prefWidth="167.0" />
       <Label layoutX="35.0" layoutY="89.0" prefHeight="70.0" prefWidth="160.0" text="Choose Animal" wrapText="true">
          <font>
-            <Font size="24.0"/>
+            <Font size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="animalImage4" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true"
-                 preserveRatio="true"/>
+      <ImageView fx:id="animalImage4" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
    </AnchorPane>
 </AnchorPane>

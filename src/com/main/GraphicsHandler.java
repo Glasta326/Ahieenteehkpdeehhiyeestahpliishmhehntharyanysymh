@@ -1,48 +1,55 @@
 package com.main;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class GraphicsHandler {
-    public ObservableList<String> animals = FXCollections.observableArrayList("Cow", "Pig", "Penguin", "Sloth", "Hallucigenia", "Blue Dragon", "Basilisk", "Probiscus Monkey");
-    public Label Title;
-    public AnchorPane player1;
-    public AnchorPane player2;
-    public AnchorPane player3;
-    public AnchorPane player4;
-    public Label die1;
-    public Label die2;
-    public Button removePlayer;
-    public Button cont;
-    public Button addPlayer;
-    public ChoiceBox<String> animalChoiceBox1;
-    public ChoiceBox<String> animalChoiceBox2;
-    public ChoiceBox<String> animalChoiceBox3;
-    public ChoiceBox<String> animalChoiceBox4;
-    public ImageView animalImage1;
-    public ImageView animalImage2;
-    public ImageView animalImage3;
-    public ImageView animalImage4;
+public class GraphicsHandler implements Initializable {
+    Scene PlayerSelect;
+    @FXML private final ObservableList<String> animals = FXCollections.observableArrayList("Cow", "Pig", "Penguin", "Sloth", "Hallucigenia", "Blue Dragon", "Basilisk", "Probiscus Monkey");
+    @FXML private AnchorPane player1;
+    @FXML private AnchorPane player2;
+    @FXML private AnchorPane player3;
+    @FXML private AnchorPane player4;
+    @FXML private Label die1;
+    @FXML private Label die2;
+    @FXML private Button removePlayer;
+    @FXML private Button cont;
+    @FXML private Button addPlayer;
+    @FXML private ChoiceBox<String> animalChoiceBox1;
+    @FXML private ChoiceBox<String> animalChoiceBox2;
+    @FXML private ChoiceBox<String> animalChoiceBox3;
+    @FXML private ChoiceBox<String> animalChoiceBox4;
+    @FXML private ImageView playerChar1;
+    @FXML private ImageView playerChar2;
+    @FXML private ImageView playerChar3;
+    @FXML private ImageView playerChar4;
+    @FXML private ImageView animalImage1;
+    @FXML private ImageView animalImage2;
+    @FXML private ImageView animalImage3;
+    @FXML private ImageView animalImage4;
+    public ArrayList<ImageView> playerCharacters = new ArrayList<>();
+    public ArrayList<ChoiceBox<String>> animalChoices = new ArrayList<>();
 
     int playerCount;
     public GraphicsHandler() {
@@ -51,11 +58,10 @@ public class GraphicsHandler {
 
     @FXML
     protected void onStartGameButtonClick(ActionEvent event) throws IOException {
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/PlayerSelect.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280.0D, 720.0D);
-        stage.setScene(scene);
-
+        PlayerSelect = new Scene(fxmlLoader.load(), 1280.0D, 720.0D);
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(PlayerSelect);
     }
 
     @FXML
@@ -105,25 +111,46 @@ public class GraphicsHandler {
     }
 
     @FXML
+    // Fires after the players have selected their animals and pressed the continue to game button
     protected void continueToGame(ActionEvent event) throws IOException, URISyntaxException {
-        GameHandler.gameSetup();
-        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(GraphicsHandler.class.getResource("resources/GameBoard.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280.0D, 720.0D);
-        stage.setScene(scene);
+        Scene GameBoard = new Scene(fxmlLoader.load(), 1280.0D, 720.0D);
+        Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(GameBoard);
+        //Image img;
+        System.out.println(playerChar1);
+        animalChoices.add(animalChoiceBox1);
+        animalChoices.add(animalChoiceBox2);
+        animalChoices.add(animalChoiceBox3);
+        animalChoices.add(animalChoiceBox4);
+        GameHandler.gameSetup(playerCount, animalChoices);
+        playerCharacters.add(playerChar1);
+        playerCharacters.add(playerChar2);
+        playerCharacters.add(playerChar3);
+        playerCharacters.add(playerChar4);
+        // Loading the GameBoard fxml file onto the stage
+        // Setting player characters to correct animal image as well as making them visible
+        //for (int i = 0; i < playerCount; i++) {
+            //System.out.println(animalChoices.get(i).getValue());
+            //img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoices.get(i).getValue() + ".jpg");
+            //playerChar1.setOpacity(1);
+            //playerChar1.setImage(img);
+        //}
     }
 
     @FXML
-    protected void rollDice() throws InterruptedException {
-        int diceNumber;
-        diceNumber = GameHandler.Rolldice();
-        die1.setText(Integer.toString(diceNumber));
-        diceNumber = GameHandler.Rolldice();
-        die2.setText(Integer.toString(diceNumber));
+    protected void rollDice() {
+        int diceNumber1;
+        int diceNumber2;
+        diceNumber1 = GameHandler.Rolldice();
+        die1.setText(Integer.toString(diceNumber1));
+        diceNumber2 = GameHandler.Rolldice();
+        die2.setText(Integer.toString(diceNumber2));
     }
 
     @FXML
     protected void changeImage(ActionEvent event) throws URISyntaxException {
+        // When a player selects an animal from drop down list, changes image below list to selected animal image
         String boxName = ((Node) event.getSource()).getId();
         Image img;
         switch (boxName){
@@ -146,4 +173,7 @@ public class GraphicsHandler {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
 }
