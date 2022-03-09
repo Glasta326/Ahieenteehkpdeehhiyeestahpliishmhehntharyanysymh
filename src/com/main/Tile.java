@@ -9,7 +9,7 @@ public class Tile {
     int[] tierCosts;
     int[] foodProduction;
     int[] foodSteal;
-    int owner = 0;
+    int owner;
     int population;
 
     public Tile(String name, int index, String type, int costs, int[] tierCosts, int[] foodProduction, int[] foodSteal) {
@@ -21,4 +21,14 @@ public class Tile {
         this.foodProduction = foodProduction;
         this.foodSteal = foodSteal;
     }
+    public void SetOwner(int playernum){
+        this.owner = playernum;
+    }
+    public int GetOwner(){
+        return this.owner;
+    }
+    public void RemOwner(){
+        this.owner = 0;
+    }
 }
+

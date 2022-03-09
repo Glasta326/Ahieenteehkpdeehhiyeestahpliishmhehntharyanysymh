@@ -96,15 +96,21 @@ public class GraphicsHandler implements Initializable {
             case 1 -> {
                 player1.setOpacity(0);
                 removePlayer.setDisable(true);
+                animalChoiceBox1.setItems(null);
             }
             case 2 -> {
                 player2.setOpacity(0);
                 cont.setDisable(true);
+                animalChoiceBox2.setItems(null);
             }
-            case 3 -> player3.setOpacity(0);
+            case 3 -> {
+                player3.setOpacity(0);
+                animalChoiceBox3.setItems(null);
+            }
             case 4 -> {
                 player4.setOpacity(0);
                 addPlayer.setDisable(false);
+                animalChoiceBox4.setItems(null);
             }
         }
         playerCount -= 1;

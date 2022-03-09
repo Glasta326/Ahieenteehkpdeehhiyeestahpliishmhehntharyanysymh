@@ -13,8 +13,8 @@ public class Player
     private int index;
 
     public void BuyArea(Tile currentTile){
-        //currentTile.owner = player.Id
-        //do shit here
+        currentTile.SetOwner(playerNum);
+        //subtract some form of currency idfk
     }
 
     public void IncreasePopulation(){
