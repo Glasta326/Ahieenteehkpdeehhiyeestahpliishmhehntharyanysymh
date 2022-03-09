@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class GameHandler {
     public static final String delimiter = ",";
@@ -33,6 +34,12 @@ public class GameHandler {
         String[] Arr;
         while((line = br.readLine()) != null) {
             Arr = line.split(delimiter);
+
+            Tile tile = new Tile(Arr[0], Integer.parseInt(Arr[1]),Arr[2],Integer.parseInt(Arr[3]), Stream.of(Arr[4])
+                    .mapToInt(Integer::parseInt).toArray(),Stream.of(Arr[5])
+                    .mapToInt(Integer::parseInt).toArray(),Stream.of(Arr[6])
+                    .mapToInt(Integer::parseInt).toArray());//there is a better way to do this but i am lazy
+            tiles.add(tile);
         }
     }
 }
