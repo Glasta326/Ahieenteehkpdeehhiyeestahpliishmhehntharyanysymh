@@ -1,18 +1,20 @@
 package com.main;
 
+import java.util.ArrayList;
+
 public class Tile {
 
     String name;
     String type;
     int index;
     int costs;
-    int[] tierCosts;
-    int[] foodProduction;
-    int[] foodSteal;
+    ArrayList<Integer> tierCosts = new ArrayList<>();
+    ArrayList<Integer> foodProduction = new ArrayList<>();
+    ArrayList<Integer> foodSteal = new ArrayList<>();
     int owner;
     int population;
 
-    public Tile(String name, int index, String type, int costs, int[] tierCosts, int[] foodProduction, int[] foodSteal) {
+    public Tile(String name, String type, int costs, ArrayList<Integer> tierCosts, ArrayList<Integer> foodProduction, ArrayList<Integer> foodSteal, int index) {
         this.name = name;
         this.index = index;
         this.type = type;
