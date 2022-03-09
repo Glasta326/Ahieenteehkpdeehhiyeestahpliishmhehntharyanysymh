@@ -44,7 +44,7 @@ public class GameHandler {
         for (int i = 0; i < playerCount; i++) {
             players.add(new Player(i, 2000, animals.get(i), 0, false));
         }
-        // Reading "Areas.csv" file
+        // Reading "Areas.csv" file.
         File root = new File(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("data")).toURI());
         File file = new File(root, "Areas.csv");
         FileReader fr = new FileReader(file);
