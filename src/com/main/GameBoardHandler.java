@@ -1,5 +1,7 @@
 package com.main;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,6 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -23,9 +28,17 @@ public class GameBoardHandler implements Initializable {
 
     public Button diceRoller;
     public Button turnEnder;
-    int diceNumber1;
-    int diceNumber2;
-    int currentPlayer;
+    public Label infoCardTitle;
+    public Label ownerLabel;
+    public Label currentTierLable;
+    public Label foodStealLabel;
+    public Label foodProdLabel;
+    public TableView<Tile> tierPriceTable;
+    public Label cost1;
+    public Label cost2;
+    public Label cost3;
+    public Label cost4;
+    Tile currentTile;
     @FXML private ImageView playerChar1;
     @FXML private ImageView playerChar2;
     @FXML private ImageView playerChar3;
@@ -34,6 +47,9 @@ public class GameBoardHandler implements Initializable {
     @FXML private Label die2;
     private int playerCount;
     public ArrayList<ImageView> playerCharacters = new ArrayList<>();
+    int diceNumber1;
+    int diceNumber2;
+    int currentPlayer;
 
     public void retrieveData(int playerCount){
         this.playerCount = playerCount;
@@ -56,6 +72,7 @@ public class GameBoardHandler implements Initializable {
         }
         currentPlayer = 0;
         GameHandler.setCurrentPlayer(currentPlayer);
+        changeInfoCard();
     }
 
     @FXML
@@ -73,6 +90,7 @@ public class GameBoardHandler implements Initializable {
         diceRoller.setDisable(false);
         turnEnder.setDisable(true);
         current.hasRolled = false;
+        changeInfoCard();
     }
 
     @FXML
@@ -114,6 +132,17 @@ public class GameBoardHandler implements Initializable {
                 playerCharacters.get(currentPlayer.returnplayerNum()).setTranslateY(playerCharacters.get(currentPlayer.returnplayerNum()).getTranslateY() - 78);
             }
         }
+        changeInfoCard();
+    }
 
+    public void changeInfoCard(){
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
+        currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
+        assert currentTile != null;
+        infoCardTitle.setText(currentTile.name);
+        cost1.setText(Integer.toString(currentTile.costs));
+        cost2.setText(Integer.toString(currentTile.tierCosts.get(0)));
+        cost3.setText(Integer.toString(currentTile.tierCosts.get(1)));
+        cost4.setText(Integer.toString(currentTile.tierCosts.get(2)));
     }
 }
