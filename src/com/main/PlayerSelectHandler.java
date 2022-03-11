@@ -90,6 +90,7 @@ public class PlayerSelectHandler implements Initializable {
                 addPlayer.setDisable(true);
             }
         }
+        dochecks();
     }
 
     @FXML
@@ -99,6 +100,7 @@ public class PlayerSelectHandler implements Initializable {
                 animalChoiceBox1.setValue(null);
                 player1.setOpacity(0);
                 removePlayer.setDisable(true);
+
             }
             case 2 -> {
                 animalChoiceBox2.setValue(null);
@@ -115,11 +117,28 @@ public class PlayerSelectHandler implements Initializable {
                 addPlayer.setDisable(false);
             }
         }
-        readycount -= 1;
+        dochecks();
+        if (playerCount ==  readycount)
+            readycount -= 1;
         playerCount -= 1;
-        cont.setDisable(readycount != playerCount);
+        if (readycount == playerCount){
+            cont.setDisable(false);
+        }
     }
-
+    public void dochecks(){
+        if (Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox2.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox3.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox4.getValue())){
+            cont.setDisable(true);
+        }
+        else if (Objects.equals(animalChoiceBox2.getValue(), animalChoiceBox3.getValue()) || Objects.equals(animalChoiceBox2.getValue(), animalChoiceBox4.getValue())){
+            cont.setDisable(true);
+        }
+        else if (Objects.equals(animalChoiceBox3.getValue(), animalChoiceBox4.getValue())){
+            cont.setDisable(true);
+        }
+        else{
+            cont.setDisable(false);
+        }
+    }
     @FXML
     protected void changeImage(ActionEvent event) throws URISyntaxException {
         // When a player selects an animal from drop down list, changes image below list to selected animal image
@@ -135,6 +154,7 @@ public class PlayerSelectHandler implements Initializable {
                 if (readycount == playerCount){
                     cont.setDisable(false);
                 }
+                dochecks();
                 break;
             case "animalChoiceBox2":
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox2.getValue() + ".jpg");
@@ -145,6 +165,7 @@ public class PlayerSelectHandler implements Initializable {
                 if (readycount == playerCount){
                     cont.setDisable(false);
                 }
+                dochecks();
                 break;
             case "animalChoiceBox3":
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox3.getValue() + ".jpg");
@@ -155,6 +176,7 @@ public class PlayerSelectHandler implements Initializable {
                 if (readycount == playerCount){
                     cont.setDisable(false);
                 }
+                dochecks();
                 break;
             case "animalChoiceBox4":
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox4.getValue() + ".jpg");
@@ -165,6 +187,7 @@ public class PlayerSelectHandler implements Initializable {
                 if (readycount == playerCount){
                     cont.setDisable(false);
                 }
+                dochecks();
                 break;
         }
     }
