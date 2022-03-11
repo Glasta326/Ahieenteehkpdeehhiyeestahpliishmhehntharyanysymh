@@ -48,9 +48,9 @@
       </Button>
       <AnchorPane prefHeight="343.0" prefWidth="234.0">
          <children>
-            <ImageView fitHeight="343.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="tileInfoCard" fitHeight="343.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/TileInfoCard.png" />
+                  <Image url="@images/SpecialTileInfoCard.png" />
                </image>
             </ImageView>
             <Label fx:id="infoCardTitle" layoutX="14.0" layoutY="8.0" prefHeight="30.0" prefWidth="207.0" text="Start">
@@ -58,68 +58,81 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Label fx:id="ownerLabel" layoutX="14.0" layoutY="75.0" prefHeight="27.0" prefWidth="215.0" text="Owner:">
+            <Label fx:id="cardInfo" layoutX="14.0" layoutY="73.0" opacity="0.0" prefHeight="140.0" prefWidth="207.0" text="cardInfo" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="areaTileInfo" layoutX="3.0" layoutY="51.0" prefHeight="285.0" prefWidth="226.0">
+         <children>
+            <Label fx:id="ownerLabel" opacity="0.0" prefHeight="27.0" prefWidth="215.0" text="Owner:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="currentTierLable" layoutX="14.0" layoutY="102.0" prefHeight="27.0" prefWidth="215.0" text="Current Tier:">
+            <Label fx:id="currentTierLabel" opacity="0.0" prefHeight="27.0" prefWidth="215.0" text="Current Tier:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="foodStealLabel" layoutX="14.0" layoutY="129.0" prefHeight="27.0" prefWidth="215.0" text="Food Steal:">
+            <Label fx:id="foodStealLabel" opacity="0.0" prefHeight="27.0" prefWidth="215.0" text="Food Steal:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="foodProdLabel" layoutX="14.0" layoutY="158.0" prefHeight="27.0" prefWidth="215.0" text="Food Prod:">
+            <Label fx:id="foodProdLabel" opacity="0.0" prefHeight="27.0" prefWidth="215.0" text="Food Prod:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="cost1" layoutX="10.0" layoutY="299.0" prefHeight="30.0" prefWidth="54.0" text="0">
+            <Label fx:id="cost1" layoutX="9.0" layoutY="247.0" prefHeight="30.0" prefWidth="54.0" text="0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="cost2" layoutX="64.0" layoutY="299.0" prefHeight="30.0" prefWidth="54.0" text="0">
+            <Label fx:id="cost2" layoutX="64.0" layoutY="247.0" prefHeight="30.0" prefWidth="54.0" text="0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="cost3" layoutX="119.0" layoutY="299.0" prefHeight="30.0" prefWidth="54.0" text="0">
+            <Label fx:id="cost3" layoutX="118.0" layoutY="247.0" prefHeight="30.0" prefWidth="54.0" text="0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="cost4" layoutX="173.0" layoutY="299.0" prefHeight="30.0" prefWidth="54.0" text="0">
+            <Label fx:id="cost4" layoutX="172.0" layoutY="247.0" prefHeight="30.0" prefWidth="54.0" text="0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label layoutX="35.0" layoutY="269.0" prefHeight="30.0" prefWidth="5.0" text="I">
+            <Label layoutX="34.0" layoutY="226.0" prefHeight="30.0" prefWidth="5.0" text="I">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="87.0" layoutY="269.0" prefHeight="30.0" prefWidth="5.0" text="II">
+            <Label layoutX="87.0" layoutY="226.0" prefHeight="30.0" prefWidth="5.0" text="II">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="138.0" layoutY="269.0" prefHeight="30.0" prefWidth="17.0" text="III">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="192.0" layoutY="269.0" prefHeight="30.0" prefWidth="17.0" text="IV">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="95.0" layoutY="250.0" prefHeight="25.0" prefWidth="54.0" text="Pricing">
+            <Label layoutX="81.0" layoutY="201.0" prefHeight="25.0" prefWidth="54.0" text="Pricing">
                <font>
                   <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="134.0" layoutY="226.0" prefHeight="30.0" prefWidth="17.0" text="III">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="191.0" layoutY="226.0" prefHeight="30.0" prefWidth="17.0" text="IV">
+               <font>
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
    </AnchorPane>
+   <Label fx:id="playersTurnLabel" layoutX="787.0" layoutY="311.0" prefHeight="115.0" prefWidth="261.0" text="Label" wrapText="true">
+      <font>
+         <Font name="System Bold" size="24.0" />
+      </font>
+   </Label>
 </AnchorPane>

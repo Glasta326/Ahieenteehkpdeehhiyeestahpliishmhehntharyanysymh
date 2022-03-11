@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,14 +31,18 @@ public class GameBoardHandler implements Initializable {
     public Button turnEnder;
     public Label infoCardTitle;
     public Label ownerLabel;
-    public Label currentTierLable;
     public Label foodStealLabel;
     public Label foodProdLabel;
+    public Label playersTurnLabel;
+    @FXML private Label cardInfo;
+    @FXML private AnchorPane areaTileInfo;
     public TableView<Tile> tierPriceTable;
     public Label cost1;
     public Label cost2;
     public Label cost3;
     public Label cost4;
+    public ImageView tileInfoCard;
+    public Label currentTierLabel;
     Tile currentTile;
     @FXML private ImageView playerChar1;
     @FXML private ImageView playerChar2;
@@ -72,12 +77,14 @@ public class GameBoardHandler implements Initializable {
         }
         currentPlayer = 0;
         GameHandler.setCurrentPlayer(currentPlayer);
+        Player current = GameHandler.returnCurrentPlayer();
         changeInfoCard();
+        playersTurnLabel.setText(current.animal + "'s turn");
     }
 
     @FXML
     // Activates after the player presses the end turn button, can only be activated after the player has rolled the dice.
-    protected void endTurn(){
+    protected void endTurn() throws URISyntaxException {
         Player current = GameHandler.returnCurrentPlayer();
         current.hasRolled = false;
         if (currentPlayer == playerCount - 1){
@@ -91,10 +98,11 @@ public class GameBoardHandler implements Initializable {
         turnEnder.setDisable(true);
         current.hasRolled = false;
         changeInfoCard();
+        playersTurnLabel.setText(current.animal + "'s turn");
     }
 
     @FXML
-    protected void rollDice() {
+    protected void rollDice() throws URISyntaxException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         // checks to see if player has already rolled dice, then rolls dice
             if (!currentPlayer.hasRolled) {
@@ -114,7 +122,7 @@ public class GameBoardHandler implements Initializable {
     }
 
     // When a player rolls dice, moves their character the appropriate number of spaces.
-    private void movePlayer(){
+    private void movePlayer() throws URISyntaxException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         for (int i = 0; i < diceNumber1 + diceNumber2; i++) {
             currentPlayer.index += 1;
@@ -135,14 +143,30 @@ public class GameBoardHandler implements Initializable {
         changeInfoCard();
     }
 
-    public void changeInfoCard(){
+    public void changeInfoCard() throws URISyntaxException {
+        
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
         assert currentTile != null;
+        Image img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + currentTile.type + "TileInfoCard.png");
+        tileInfoCard.setImage(img);
+        assert currentTile != null;
         infoCardTitle.setText(currentTile.name);
-        cost1.setText(Integer.toString(currentTile.costs));
-        cost2.setText(Integer.toString(currentTile.tierCosts.get(0)));
-        cost3.setText(Integer.toString(currentTile.tierCosts.get(1)));
-        cost4.setText(Integer.toString(currentTile.tierCosts.get(2)));
+        if (Objects.equals(currentTile.type, "Special")){
+            cardInfo.setOpacity(1);
+            areaTileInfo.setOpacity(0);
+            switch (currentTile.name){
+                case "Start":
+                    cardInfo.setText("Land on the Start tile to earn 1000 food, pass the start tile to earn 500 food");
+            }
+        }
+        else {
+            cardInfo.setOpacity(0);
+            areaTileInfo.setOpacity(1);
+            cost1.setText(Integer.toString(currentTile.costs));
+            cost2.setText(Integer.toString(currentTile.tierCosts.get(0)));
+            cost3.setText(Integer.toString(currentTile.tierCosts.get(1)));
+            cost4.setText(Integer.toString(currentTile.tierCosts.get(2)));
+        }
     }
 }

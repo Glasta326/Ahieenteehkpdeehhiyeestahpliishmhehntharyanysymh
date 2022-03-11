@@ -41,11 +41,98 @@
    <ImageView fx:id="playerChar4" fitHeight="30.0" fitWidth="30.0" layoutX="575.0" layoutY="45.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
    </ImageView>
    <AnchorPane layoutX="14.0" layoutY="6.0" prefHeight="708.0" prefWidth="538.0">
-      <Button fx:id="turnEnder" layoutX="196.0" layoutY="667.0" mnemonicParsing="false" onAction="#endTurn" prefHeight="26.0" prefWidth="146.0"
-              text="End Turn">
+      <Button fx:id="turnEnder" layoutX="196.0" layoutY="667.0" mnemonicParsing="false" onAction="#endTurn" prefHeight="26.0" prefWidth="146.0" text="End Turn">
          <font>
-            <Font name="System Bold" size="12.0"/>
+            <Font name="System Bold" size="12.0" />
          </font>
       </Button>
+      <AnchorPane prefHeight="343.0" prefWidth="234.0">
+         <children>
+            <ImageView fx:id="tileInfoCard" fitHeight="343.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/SpecialTileInfoCard.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="infoCardTitle" layoutX="14.0" layoutY="8.0" prefHeight="30.0" prefWidth="207.0" text="Start">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="cardInfo" layoutX="14.0" layoutY="73.0" opacity="0.0" prefHeight="140.0" prefWidth="207.0" text="cardInfo" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="areaTileInfo" layoutX="3.0" layoutY="51.0" prefHeight="285.0" prefWidth="226.0">
+         <children>
+            <Label fx:id="ownerLabel" opacity="0.0" prefHeight="27.0" prefWidth="215.0" text="Owner:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentTierLabel" opacity="0.0" prefHeight="27.0" prefWidth="215.0" text="Current Tier:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="foodStealLabel" opacity="0.0" prefHeight="27.0" prefWidth="215.0" text="Food Steal:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="foodProdLabel" opacity="0.0" prefHeight="27.0" prefWidth="215.0" text="Food Prod:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="cost1" layoutX="9.0" layoutY="247.0" prefHeight="30.0" prefWidth="54.0" text="0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="cost2" layoutX="64.0" layoutY="247.0" prefHeight="30.0" prefWidth="54.0" text="0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="cost3" layoutX="118.0" layoutY="247.0" prefHeight="30.0" prefWidth="54.0" text="0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="cost4" layoutX="172.0" layoutY="247.0" prefHeight="30.0" prefWidth="54.0" text="0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label layoutX="34.0" layoutY="226.0" prefHeight="30.0" prefWidth="5.0" text="I">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="87.0" layoutY="226.0" prefHeight="30.0" prefWidth="5.0" text="II">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="201.0" prefHeight="25.0" prefWidth="54.0" text="Pricing">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="134.0" layoutY="226.0" prefHeight="30.0" prefWidth="17.0" text="III">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="191.0" layoutY="226.0" prefHeight="30.0" prefWidth="17.0" text="IV">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </AnchorPane>
+   <Label fx:id="playersTurnLabel" layoutX="787.0" layoutY="311.0" prefHeight="115.0" prefWidth="261.0" text="Label" wrapText="true">
+      <font>
+         <Font name="System Bold" size="24.0" />
+      </font>
+   </Label>
 </AnchorPane>
