@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,7 +33,9 @@ public class GameBoardHandler implements Initializable {
     public Label ownerLabel;
     public Label foodStealLabel;
     public Label foodProdLabel;
+    public Label playersTurnLabel;
     @FXML private Label cardInfo;
+    @FXML private AnchorPane areaTileInfo;
     public TableView<Tile> tierPriceTable;
     public Label cost1;
     public Label cost2;
@@ -74,7 +77,9 @@ public class GameBoardHandler implements Initializable {
         }
         currentPlayer = 0;
         GameHandler.setCurrentPlayer(currentPlayer);
+        Player current = GameHandler.returnCurrentPlayer();
         changeInfoCard();
+        playersTurnLabel.setText(current.animal + "'s turn");
     }
 
     @FXML
@@ -93,6 +98,7 @@ public class GameBoardHandler implements Initializable {
         turnEnder.setDisable(true);
         current.hasRolled = false;
         changeInfoCard();
+        playersTurnLabel.setText(current.animal + "'s turn");
     }
 
     @FXML
@@ -138,6 +144,7 @@ public class GameBoardHandler implements Initializable {
     }
 
     public void changeInfoCard() throws URISyntaxException {
+        
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
         assert currentTile != null;
@@ -146,10 +153,16 @@ public class GameBoardHandler implements Initializable {
         assert currentTile != null;
         infoCardTitle.setText(currentTile.name);
         if (Objects.equals(currentTile.type, "Special")){
-
+            cardInfo.setOpacity(1);
+            areaTileInfo.setOpacity(0);
+            switch (currentTile.name){
+                case "Start":
+                    cardInfo.setText("Land on the Start tile to earn 1000 food, pass the start tile to earn 500 food");
+            }
         }
         else {
-
+            cardInfo.setOpacity(0);
+            areaTileInfo.setOpacity(1);
             cost1.setText(Integer.toString(currentTile.costs));
             cost2.setText(Integer.toString(currentTile.tierCosts.get(0)));
             cost3.setText(Integer.toString(currentTile.tierCosts.get(1)));

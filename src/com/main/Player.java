@@ -9,7 +9,7 @@ public class Player
     private final int playerNum;
     private int food;
     private Tile currentTile;
-    private final String animal;
+    public final String animal;
     public int index;
     public boolean hasRolled;
 
