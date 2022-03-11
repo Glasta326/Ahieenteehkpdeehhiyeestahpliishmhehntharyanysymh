@@ -58,7 +58,10 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Label fx:id="cardInfo" layoutX="14.0" layoutY="73.0" opacity="0.0" prefHeight="140.0" prefWidth="207.0" text="cardInfo" />
+            <Label fx:id="cardInfo" layoutX="14.0" layoutY="73.0" opacity="0.0" prefHeight="140.0" prefWidth="207.0" text="cardInfo" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="areaTileInfo" layoutX="3.0" layoutY="51.0" prefHeight="285.0" prefWidth="226.0">
@@ -127,4 +130,9 @@
          </children>
       </AnchorPane>
    </AnchorPane>
+   <Label fx:id="playersTurnLabel" layoutX="787.0" layoutY="311.0" prefHeight="115.0" prefWidth="261.0" text="Label" wrapText="true">
+      <font>
+         <Font name="System Bold" size="24.0" />
+      </font>
+   </Label>
 </AnchorPane>

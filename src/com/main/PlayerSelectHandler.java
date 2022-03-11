@@ -126,13 +126,13 @@ public class PlayerSelectHandler implements Initializable {
         }
     }
     public void dochecks(){
-        if (Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox2.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox3.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox4.getValue())){
+        if (Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox2.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox3.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox4.getValue()) && animalChoiceBox1.getValue() != null){
             cont.setDisable(true);
         }
-        else if (Objects.equals(animalChoiceBox2.getValue(), animalChoiceBox3.getValue()) || Objects.equals(animalChoiceBox2.getValue(), animalChoiceBox4.getValue())){
+        else if (Objects.equals(animalChoiceBox2.getValue(), animalChoiceBox3.getValue()) || Objects.equals(animalChoiceBox2.getValue(), animalChoiceBox4.getValue()) && animalChoiceBox2.getValue() != null){
             cont.setDisable(true);
         }
-        else if (Objects.equals(animalChoiceBox3.getValue(), animalChoiceBox4.getValue())){
+        else if (Objects.equals(animalChoiceBox3.getValue(), animalChoiceBox4.getValue()) && animalChoiceBox3.getValue() != null){
             cont.setDisable(true);
         }
         else{
