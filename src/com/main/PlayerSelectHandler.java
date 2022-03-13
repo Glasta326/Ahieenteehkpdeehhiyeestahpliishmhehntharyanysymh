@@ -8,10 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -44,10 +42,6 @@ public class PlayerSelectHandler implements Initializable {
     public ArrayList<String> animalChoices = new ArrayList<>();
     int readycount = 0;
     private int playerCount;
-
-    public void retrieveData(int playerCount){
-
-    }
 
     @FXML
     // Fires after the players have selected their animals and pressed the continue to game button
@@ -91,6 +85,7 @@ public class PlayerSelectHandler implements Initializable {
             }
         }
         dochecks();
+        cont.setDisable(true);
     }
 
     @FXML
@@ -144,51 +139,51 @@ public class PlayerSelectHandler implements Initializable {
         // When a player selects an animal from drop down list, changes image below list to selected animal image
         String boxName = ((Node) event.getSource()).getId();
         Image img;
-        switch (boxName){
-            case "animalChoiceBox1":
+        switch (boxName) {
+            case "animalChoiceBox1" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox1.getValue() + ".jpg");
                 animalImage1.setImage(img);
                 if (animalChoiceBox1 != null) {
                     readycount += 1;
                 }
-                if (readycount == playerCount){
+                if (readycount == playerCount) {
                     cont.setDisable(false);
                 }
                 dochecks();
-                break;
-            case "animalChoiceBox2":
+            }
+            case "animalChoiceBox2" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox2.getValue() + ".jpg");
                 animalImage2.setImage(img);
                 if (animalChoiceBox2 != null) {
                     readycount += 1;
                 }
-                if (readycount == playerCount){
+                if (readycount == playerCount) {
                     cont.setDisable(false);
                 }
                 dochecks();
-                break;
-            case "animalChoiceBox3":
+            }
+            case "animalChoiceBox3" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox3.getValue() + ".jpg");
                 animalImage3.setImage(img);
                 if (animalChoiceBox3 != null) {
                     readycount += 1;
                 }
-                if (readycount == playerCount){
+                if (readycount == playerCount) {
                     cont.setDisable(false);
                 }
                 dochecks();
-                break;
-            case "animalChoiceBox4":
+            }
+            case "animalChoiceBox4" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox4.getValue() + ".jpg");
                 animalImage4.setImage(img);
                 if (animalChoiceBox4 != null) {
                     readycount += 1;
                 }
-                if (readycount == playerCount){
+                if (readycount == playerCount) {
                     cont.setDisable(false);
                 }
                 dochecks();
-                break;
+            }
         }
     }
 

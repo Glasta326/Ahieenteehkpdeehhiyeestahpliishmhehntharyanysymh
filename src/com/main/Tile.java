@@ -8,11 +8,12 @@ public class Tile {
     String type;
     int index;
     int costs;
-    ArrayList<Integer> tierCosts = new ArrayList<>();
-    ArrayList<Integer> foodProduction = new ArrayList<>();
-    ArrayList<Integer> foodSteal = new ArrayList<>();
+    ArrayList<Integer> tierCosts;
+    ArrayList<Integer> foodProduction;
+    ArrayList<Integer> foodSteal;
     int owner;
     int population;
+    int tier;
 
     public Tile(String name, String type, int costs, ArrayList<Integer> tierCosts, ArrayList<Integer> foodProduction, ArrayList<Integer> foodSteal, int index) {
         this.name = name;
@@ -22,14 +23,16 @@ public class Tile {
         this.tierCosts = tierCosts;
         this.foodProduction = foodProduction;
         this.foodSteal = foodSteal;
+        this.tier = 0;
+        this.owner = 0;
     }
-    public void SetOwner(int playernum){
+    public void setOwner(int playernum){
         this.owner = playernum;
     }
-    public int GetOwner(){
+    public int getOwner(){
         return this.owner;
     }
-    public void RemOwner(){
+    public void remOwner(){
         this.owner = 0;
     }
 }
