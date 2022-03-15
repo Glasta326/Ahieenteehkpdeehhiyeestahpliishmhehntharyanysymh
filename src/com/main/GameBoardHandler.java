@@ -32,6 +32,8 @@ public class GameBoardHandler implements Initializable {
     public AnchorPane unownedTileButtonOptions;
     public Label infoCardTitle1;
     public AnchorPane editableTilePane;
+    public Label currentPopulationLabel;
+    public Label currentPopulationLabel1;
     @FXML private Button diceRoller;
     @FXML private Button turnEnder;
     @FXML private Label infoCardTitle;
@@ -211,6 +213,7 @@ public class GameBoardHandler implements Initializable {
             currentTierLabel.setText("Current Tier: " + currentTile.tier);
             foodProdLabel.setText("Food Prod: " +  currentTile.foodProduction.get(0) + " | " + currentTile.foodProduction.get(1) + " | "  + currentTile.foodProduction.get(2) + " | "  + currentTile.foodProduction.get(3));
             foodStealLabel.setText("Food Steal: " + currentTile.foodSteal.get(0) + " | " + currentTile.foodSteal.get(1) + " | "  + currentTile.foodSteal.get(2) + " | "  + currentTile.foodSteal.get(3));
+            currentPopulationLabel.setText("Current Population: " + currentTile.population);
             if (currentTile.owner != 0) {
                 if (currentTile.owner != currentPlayer.returnplayerNum()) {
                     ownerLabel.setText("Owner: " + Objects.requireNonNull(GameHandler.getPlayerWithIndex(currentTile.getOwner())).animal);
@@ -299,6 +302,7 @@ public class GameBoardHandler implements Initializable {
             foodProdLabel1.setText("Food Prod: " + area.foodProduction.get(0) + " | " + area.foodProduction.get(1) + " | " + area.foodProduction.get(2) + " | " + area.foodProduction.get(3));
             foodStealLabel1.setText("Food Steal: " + area.foodSteal.get(0) + " | " + area.foodSteal.get(1) + " | " + area.foodSteal.get(2) + " | " + area.foodSteal.get(3));
             ownerLabel1.setText("Owner: " + Objects.requireNonNull(GameHandler.getPlayerWithIndex(area.getOwner())).animal);
+            currentPopulationLabel1.setText("Current Population: " + currentTile.population);
             editTilePane.setOpacity(1);
             editTilePane.setDisable(false);
             upgradeButton.setDisable(currentPlayer.food < currentTile.tierCosts.get(currentTile.tier - 1) || currentTile.tier >= 4);
@@ -323,5 +327,33 @@ public class GameBoardHandler implements Initializable {
             changePlayerStats();
             onAreaSelect();
         }
+    }
+
+    @FXML
+    protected void addPopulation() throws URISyntaxException {
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
+        Tile area = GameHandler.getTileWithName(areaSelectionBox.getValue());
+        assert area != null;
+        if (currentPlayer.sparePopulation >= Integer.parseInt(addPopulationTextField.getText())) {
+            area.population += Integer.parseInt(addPopulationTextField.getText());
+            currentPlayer.sparePopulation -= Integer.parseInt(addPopulationTextField.getText());
+        }
+        changeInfoCard();
+        changePlayerStats();
+        onAreaSelect();
+    }
+
+    @FXML
+    protected void removePopulation() throws URISyntaxException {
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
+        Tile area = GameHandler.getTileWithName(areaSelectionBox.getValue());
+        assert area != null;
+        if (area.population >= Integer.parseInt(removePopulationTextField.getText())) {
+            area.population -= Integer.parseInt(removePopulationTextField.getText());
+            currentPlayer.sparePopulation += Integer.parseInt(removePopulationTextField.getText());
+        }
+        changeInfoCard();
+        changePlayerStats();
+        onAreaSelect();
     }
 }

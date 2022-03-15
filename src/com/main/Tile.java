@@ -25,6 +25,7 @@ public class Tile {
         this.foodSteal = foodSteal;
         this.tier = 0;
         this.owner = 0;
+        this.population = 0;
     }
     public void setOwner(int playernum){
         this.owner = playernum;

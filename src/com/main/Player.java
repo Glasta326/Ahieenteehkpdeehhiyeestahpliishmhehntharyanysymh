@@ -12,6 +12,7 @@ public class Player
     private Tile currentTile;
     public final String animal;
     public int index;
+    public int lives;
 
     public void IncreasePopulation(){
         currentTile.population += 1; //replace 1 with actual amount
@@ -35,5 +36,6 @@ public class Player
         this.populationUpkeep = (int)Math.floor(totalPopulation * 0.5);
         this.foodProduction = 50;
         this.foodOutput = foodProduction - populationUpkeep;
+        this.lives = 3;
     }
 }
