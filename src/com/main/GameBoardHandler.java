@@ -10,16 +10,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class GameBoardHandler implements Initializable {
+public class GameBoardHandler implements Initializable  {
 
     public Label foodOutputStat;
     public AnchorPane tileButtonOptions;
@@ -34,6 +34,9 @@ public class GameBoardHandler implements Initializable {
     public AnchorPane editableTilePane;
     public Label currentPopulationLabel;
     public Label currentPopulationLabel1;
+    public Button attemptAnnex;
+    public Label victoryChanceAnnex;
+    public Label messageLabel;
     @FXML private Button diceRoller;
     @FXML private Button turnEnder;
     @FXML private Label infoCardTitle;
@@ -84,6 +87,7 @@ public class GameBoardHandler implements Initializable {
     int diceNumber2;
     int currentPlayer;
     boolean hasRolled;
+    HashMap<String,String> infoMessages = new HashMap<>();
 
     public void retrieveData(int playerCount){
         this.playerCount = playerCount;
@@ -91,6 +95,13 @@ public class GameBoardHandler implements Initializable {
 
     // Gets called when the player presses the "Continue to game button"
     public void initGame(Parent root, ArrayList<String> animals, Stage stage) throws URISyntaxException {
+        infoMessages.put("negativePop","Cannot enter a negative value!");
+        infoMessages.put("emptyVal","Must enter a value!");
+        infoMessages.put("cannotAfford","Cannot afford!");
+        infoMessages.put("victory", "Successfully defeated!");
+        infoMessages.put("annexed", "Successfully annexed!");
+        infoMessages.put("defeated", "You were defeated!");
+        infoMessages.put("missedTurn", "Previous player missed their turn!");
         Scene GameBoard = new Scene(root, 1280.0D, 720.0D);
         stage.setScene(GameBoard);
         Image img;
@@ -113,9 +124,8 @@ public class GameBoardHandler implements Initializable {
         hasRolled = false;
     }
 
-    @FXML
-    // Activates after the player presses the end turn button, can only be activated after the player has rolled the dice.
-    protected void endTurn() throws URISyntaxException {
+    // Activates after the player presses the end turn button, can only be activated after the player has rolled the dice, or if player misses their turn.
+    private void turnOver() throws URISyntaxException {
         if (currentPlayer == playerCount - 1){
             currentPlayer = 0;
         } else {
@@ -123,6 +133,10 @@ public class GameBoardHandler implements Initializable {
         }
         GameHandler.setCurrentPlayer(currentPlayer);
         Player current = GameHandler.returnCurrentPlayer();
+        if (current.turnsToMiss > 0){
+            current.turnsToMiss -= 1;
+            turnOver();
+        }
         diceRoller.setDisable(false);
         turnEnder.setDisable(true);
         hasRolled = false;
@@ -134,11 +148,19 @@ public class GameBoardHandler implements Initializable {
         areaSelectionBox.setValue(null);
         editableTilePane.setOpacity(0);
         setOwnedTileList();
+        messageLabel.setText("");
+    }
+
+    @FXML
+
+    protected void endTurn() throws URISyntaxException {
+        turnOver();
     }
 
     @FXML
     protected void rollDice() throws URISyntaxException {
         // checks to see if player has already rolled dice, then rolls dice
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
         if (!hasRolled) {
             diceNumber1 = GameHandler.Rolldice();
             die1.setText(Integer.toString(diceNumber1));
@@ -146,7 +168,13 @@ public class GameBoardHandler implements Initializable {
             die2.setText(Integer.toString(diceNumber2));
             movePlayer();
             diceRoller.setDisable(true);
-            turnEnder.setDisable(false);
+            currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
+            assert currentTile != null;
+            if (currentTile.getOwner() != 0 && currentTile.getOwner() != currentPlayer.returnplayerNum()){
+                turnEnder.setDisable(true);
+            }else{
+                turnEnder.setDisable(false);
+            }
             hasRolled = true;
         }
         diceRoller.setDisable(true);
@@ -160,21 +188,32 @@ public class GameBoardHandler implements Initializable {
     private void movePlayer() throws URISyntaxException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         for (int i = 0; i < diceNumber1 + diceNumber2; i++) {
-            currentPlayer.index += 1;
-            if (currentPlayer.index > 32){
+            // Checks to see what lane of the board they are on and moves accordingly
+            if (currentPlayer.index > 32 || currentPlayer.index == 32){
                 currentPlayer.index = 0;
             }
-            // Checks to see what lane of the board they are on and moves accordingly
-            if (1 <= currentPlayer.index && currentPlayer.index < 9){
+            if (0 <= currentPlayer.index && currentPlayer.index < 8){
                 playerCharacters.get(currentPlayer.returnplayerNum()-1).setTranslateX(playerCharacters.get(currentPlayer.returnplayerNum()-1).getTranslateX() + 78);
-            } else if (9 <= currentPlayer.index && currentPlayer.index < 17){
+            } else if (8 <= currentPlayer.index && currentPlayer.index < 16){
                 playerCharacters.get(currentPlayer.returnplayerNum()-1).setTranslateY(playerCharacters.get(currentPlayer.returnplayerNum()-1).getTranslateY() + 78);
-            } else if (17 <= currentPlayer.index && currentPlayer.index < 25) {
+            } else if (16 <= currentPlayer.index && currentPlayer.index < 24) {
                 playerCharacters.get(currentPlayer.returnplayerNum()-1).setTranslateX(playerCharacters.get(currentPlayer.returnplayerNum()-1).getTranslateX() - 78);
-            } else if (25 <= currentPlayer.index) {
+            } else if (24 <= currentPlayer.index) {
                 playerCharacters.get(currentPlayer.returnplayerNum()-1).setTranslateY(playerCharacters.get(currentPlayer.returnplayerNum()-1).getTranslateY() - 78);
             }
+            currentPlayer.index += 1;
+            if (currentPlayer.index > 32 || currentPlayer.index == 32){
+                currentPlayer.index = 0;
+                currentPlayer.food += 500;
+            }
+            if (currentPlayer.index == 8){
+                currentPlayer.turnsToMiss += 1;
+            }
         }
+        if ( currentPlayer.index == 0){
+            currentPlayer.food += 500;
+        }
+        changePlayerStats();
         changeInfoCard();
     }
 
@@ -199,6 +238,7 @@ public class GameBoardHandler implements Initializable {
             ownedTileButtonOptions.setDisable(true);
             attemptFight.setDisable(true);
             surrender.setDisable(true);
+            attemptAnnex.setDisable(true);
             unownedTileButtonOptions.setOpacity(0);
             unownedTileButtonOptions.setDisable(true);
             purchaseTile.setDisable(true);
@@ -224,6 +264,12 @@ public class GameBoardHandler implements Initializable {
                     unownedTileButtonOptions.setDisable(true);
                     attemptFight.setDisable(false);
                     surrender.setDisable(false);
+                    attemptAnnex.setDisable(false);
+                    surrenderCost.setText("Food Lost: "+currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / currentPlayer.sparePopulation)));
+                    long chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 1.1)) * currentPlayer.sparePopulation);
+                    victoryChance.setText("Victory Chance: " + chance + "%");
+                    chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 2.5)) * currentPlayer.sparePopulation);
+                    victoryChanceAnnex.setText("Victory Chance: " + chance + "%");
                 }
                 else{
                     ownedTileButtonOptions.setOpacity(0);
@@ -232,6 +278,7 @@ public class GameBoardHandler implements Initializable {
                     unownedTileButtonOptions.setDisable(true);
                     attemptFight.setDisable(true);
                     surrender.setDisable(true);
+                    attemptAnnex.setDisable(true);
                 }
             }
             else{
@@ -302,10 +349,10 @@ public class GameBoardHandler implements Initializable {
             foodProdLabel1.setText("Food Prod: " + area.foodProduction.get(0) + " | " + area.foodProduction.get(1) + " | " + area.foodProduction.get(2) + " | " + area.foodProduction.get(3));
             foodStealLabel1.setText("Food Steal: " + area.foodSteal.get(0) + " | " + area.foodSteal.get(1) + " | " + area.foodSteal.get(2) + " | " + area.foodSteal.get(3));
             ownerLabel1.setText("Owner: " + Objects.requireNonNull(GameHandler.getPlayerWithIndex(area.getOwner())).animal);
-            currentPopulationLabel1.setText("Current Population: " + currentTile.population);
+            currentPopulationLabel1.setText("Current Population: " + area.population);
             editTilePane.setOpacity(1);
             editTilePane.setDisable(false);
-            upgradeButton.setDisable(currentPlayer.food < currentTile.tierCosts.get(currentTile.tier - 1) || currentTile.tier >= 4);
+            upgradeButton.setDisable(currentPlayer.food < area.tierCosts.get(area.tier - 1) || area.tier >= 4);
             addPopulationButton.setDisable(false);
             removePopulationButton.setDisable(false);
         }
@@ -334,7 +381,7 @@ public class GameBoardHandler implements Initializable {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         Tile area = GameHandler.getTileWithName(areaSelectionBox.getValue());
         assert area != null;
-        if (currentPlayer.sparePopulation >= Integer.parseInt(addPopulationTextField.getText())) {
+        if (currentPlayer.sparePopulation >= Integer.parseInt(addPopulationTextField.getText()) && Integer.parseInt(addPopulationTextField.getText()) > 0) {
             area.population += Integer.parseInt(addPopulationTextField.getText());
             currentPlayer.sparePopulation -= Integer.parseInt(addPopulationTextField.getText());
         }
@@ -348,12 +395,141 @@ public class GameBoardHandler implements Initializable {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         Tile area = GameHandler.getTileWithName(areaSelectionBox.getValue());
         assert area != null;
-        if (area.population >= Integer.parseInt(removePopulationTextField.getText())) {
+        if (area.population >= Integer.parseInt(removePopulationTextField.getText()) && Integer.parseInt(removePopulationTextField.getText()) > 0) {
             area.population -= Integer.parseInt(removePopulationTextField.getText());
             currentPlayer.sparePopulation += Integer.parseInt(removePopulationTextField.getText());
         }
         changeInfoCard();
         changePlayerStats();
         onAreaSelect();
+    }
+
+    private void giveFood(int multiplier) throws URISyntaxException {
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
+        currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
+        assert currentTile != null;
+        Player tileOwner = GameHandler.getPlayerWithIndex(currentTile.getOwner());
+        int foodToGive = (currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / currentPlayer.sparePopulation))) * multiplier;
+        assert tileOwner != null;
+        // Checks if player has enough food in reserve to give
+        if (currentPlayer.food > foodToGive){
+            System.out.println("Payed player: " + foodToGive);
+            currentPlayer.food -= foodToGive;
+            tileOwner.food += foodToGive;
+        }else{
+            tileOwner.food += foodToGive;
+            foodToGive -= currentPlayer.food;
+            currentPlayer.food = 0;
+            // If player lacks food, checks if they have enough population to cover the food debt, if not they are eliminated
+            if (currentPlayer.totalPopulation > foodToGive){
+                // Checks if player has enough pop in spare to cover debt, if not takes from areas.
+                if (currentPlayer.sparePopulation > foodToGive){
+                    currentPlayer.sparePopulation -= foodToGive;
+                }else {
+                    ArrayList<Tile> playersTiles = GameHandler.getTilesOwnedBy(currentPlayer);
+                    foodToGive -= currentPlayer.sparePopulation;
+                    currentPlayer.sparePopulation = 0;
+                    // Checks areas owned by the player from closest to start to end until and removes population until debt is paid off.
+                    for (Tile tile : playersTiles){
+                        if (tile.population > foodToGive){
+                            tile.population -= foodToGive;
+                            break;
+                        }else{
+                            foodToGive -= tile.population;
+                            tile.population = 0;
+                        }
+                    }
+                }
+            }else{
+                System.out.println(currentPlayer.animal + " has been eliminated!");
+                // Players gets eliminated (tile owner gains food equal to currentPlayers spare food and total population)
+            }
+        }
+        turnEnder.setDisable(false);
+        surrender.setDisable(true);
+        attemptAnnex.setDisable(true);
+        attemptFight.setDisable(true);
+        changeInfoCard();
+        changePlayerStats();
+        onAreaSelect();
+    }
+
+    @FXML
+    protected void surrender() throws URISyntaxException {
+        giveFood(1);
+    }
+
+    @FXML
+    protected void fight() throws URISyntaxException {
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
+        currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
+        assert currentTile != null;
+        Player tileOwner = GameHandler.getPlayerWithIndex(currentTile.getOwner());
+        int foodToGive = currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / currentPlayer.sparePopulation));
+        assert tileOwner != null;
+        long chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 1.1)) * currentPlayer.sparePopulation);
+        Random ran = new Random();
+        int randomNumber = ran.nextInt(100) + 1;
+        if (randomNumber <= chance){
+            long populationLost = Math.round((1 - (chance / 100.0)) * 0.05 * currentPlayer.sparePopulation);
+            currentPlayer.sparePopulation -= populationLost;
+            populationLost = Math.round(((chance / 100.0)) * 0.3 * currentTile.population);
+            currentTile.population -= populationLost;
+            changeMessageLabel("victory", "GREEN");
+        }else{
+            giveFood(2);
+            long populationLost = Math.round((1 - (chance / 100.0)) * 0.3 * currentPlayer.sparePopulation);
+            currentPlayer.sparePopulation -= populationLost;
+            populationLost = Math.round(((chance / 100.0)) * 0.05 * currentTile.population);
+            currentTile.population -= populationLost;
+            changeMessageLabel("defeated", "RED");
+        }
+        changeInfoCard();
+        changePlayerStats();
+        onAreaSelect();
+    }
+
+    @FXML
+    protected void annex() throws URISyntaxException {
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
+        currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
+        assert currentTile != null;
+        Player tileOwner = GameHandler.getPlayerWithIndex(currentTile.getOwner());
+        assert tileOwner != null;
+        long chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 2.5)) * currentPlayer.sparePopulation);
+        Random ran = new Random();
+        int randomNumber = ran.nextInt(100) + 1;
+        if (randomNumber <= chance){
+            long populationLost = Math.round((1 - (chance / 100.0)) * 0.1 * currentPlayer.sparePopulation);
+            currentPlayer.sparePopulation -= populationLost;
+            populationLost = Math.round(((chance / 100.0)) * 0.8 * currentTile.population);
+            currentTile.population -= populationLost;
+            currentTile.owner = currentPlayer.returnplayerNum();
+            changeMessageLabel("annexed", "GREEN");
+        }else {
+            long populationLost = Math.round((1 - (chance / 100.0)) * 0.8 * currentPlayer.sparePopulation);
+            currentPlayer.sparePopulation -= populationLost;
+            populationLost = Math.round(((chance / 100.0)) * 0.1 * currentTile.population);
+            currentTile.population -= populationLost;
+            changeMessageLabel("defeated", "RED");
+        }
+        turnEnder.setDisable(false);
+        surrender.setDisable(true);
+        attemptAnnex.setDisable(true);
+        attemptFight.setDisable(true);
+        changeInfoCard();
+        changePlayerStats();
+        onAreaSelect();
+    }
+
+    private void changeMessageLabel(String message, String clr){
+        Color colour;
+        switch (clr.toUpperCase()) {
+            case "RED" -> colour = Color.RED;
+            case "GREEN" -> colour = Color.GREEN;
+            default -> colour = Color.BLACK;
+        }
+        messageLabel.setTextFill(colour);
+        messageLabel.setText(infoMessages.get(message));
     }
 }

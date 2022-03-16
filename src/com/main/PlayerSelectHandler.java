@@ -68,24 +68,27 @@ public class PlayerSelectHandler implements Initializable {
             case 1 -> {
                 player1.setOpacity(1);
                 animalChoiceBox1.setItems(animals);
+                animalChoiceBox1.setValue("Cow");
                 removePlayer.setDisable(false);
             }
             case 2 -> {
                 player2.setOpacity(1);
                 animalChoiceBox2.setItems(animals);
+                animalChoiceBox2.setValue("Cow");
             }
             case 3 -> {
                 player3.setOpacity(1);
                 animalChoiceBox3.setItems(animals);
+                animalChoiceBox3.setValue("Cow");
             }
             case 4 -> {
                 player4.setOpacity(1);
                 animalChoiceBox4.setItems(animals);
+                animalChoiceBox4.setValue("Cow");
                 addPlayer.setDisable(true);
             }
         }
         dochecks();
-        cont.setDisable(true);
     }
 
     @FXML
@@ -112,13 +115,8 @@ public class PlayerSelectHandler implements Initializable {
                 addPlayer.setDisable(false);
             }
         }
-        dochecks();
-        if (playerCount ==  readycount)
-            readycount -= 1;
         playerCount -= 1;
-        if (readycount == playerCount){
-            cont.setDisable(false);
-        }
+        dochecks();
     }
     public void dochecks(){
         if (Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox2.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox3.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox4.getValue()) && animalChoiceBox1.getValue() != null){
@@ -134,6 +132,7 @@ public class PlayerSelectHandler implements Initializable {
             cont.setDisable(false);
         }
     }
+
     @FXML
     protected void changeImage(ActionEvent event) throws URISyntaxException {
         // When a player selects an animal from drop down list, changes image below list to selected animal image

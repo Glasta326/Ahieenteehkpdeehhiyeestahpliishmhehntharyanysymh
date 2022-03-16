@@ -13,6 +13,7 @@ public class Player
     public final String animal;
     public int index;
     public int lives;
+    public int turnsToMiss;
 
     public void IncreasePopulation(){
         currentTile.population += 1; //replace 1 with actual amount
@@ -37,5 +38,6 @@ public class Player
         this.foodProduction = 50;
         this.foodOutput = foodProduction - populationUpkeep;
         this.lives = 3;
+        this.turnsToMiss = 0;
     }
 }
