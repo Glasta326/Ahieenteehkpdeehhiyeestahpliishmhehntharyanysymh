@@ -1,14 +1,12 @@
 package com.main;
 
 import javafx.application.Application;
-import javafx.scene.control.ChoiceBox;
 
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
-import java.util.stream.Stream;
 
 public class GameHandler {
     public static Player currentPlayer;
@@ -46,14 +44,14 @@ public class GameHandler {
         playerCount = playerNum;
         // Creates player objects
         for (int i = 0; i < playerCount; i++) {
-            players.add(new Player(i, 2000, animals.get(i), 0, false));
+            players.add(new Player(i+1, 2000, animals.get(i), 0, false));
         }
         // Reading "Areas.csv" file.
         File root = new File(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("data")).toURI());
         File file = new File(root, "Areas.csv");
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
-        String line = "";
+        String line;
 
         int i = 0;
         // Creates tile objects
@@ -79,15 +77,45 @@ public class GameHandler {
             for (String string : ArrStealS) {
                 ArrSteal.add(Integer.parseInt(string));
             }
-            System.out.println(ArrCosts);
             Tile tile = new Tile(Arr[0], Arr[1], Integer.parseInt(Arr[2]), ArrCosts, ArrProd, ArrSteal, i);
             tiles.add(tile);
         }
     }
 
+    public static Player getPlayerWithIndex(int i){
+        // Loops through all players and checks to see if their player number matches the passed parameter - then returns that player.
+        for (Player player : players){
+            if (player.returnplayerNum() == i){
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<Tile> getTilesOwnedBy(Player player){
+        // Checks if the tiles "Owner" number is equal to the player number
+        ArrayList<Tile> ownedTiles = new ArrayList<>();
+        for (Tile tile : tiles){
+            if (tile.owner == player.returnplayerNum()){
+                ownedTiles.add(tile);
+            }
+        }
+        return ownedTiles;
+    }
+
     public static Tile getTileWithIndex(int i){
+        // Loops through all tiles and checks to see if their index matches the passed parameter - then returns that tile.
         for (Tile tile : tiles){
             if (tile.index == i) {
+                return tile;
+            }
+        }
+        return null;
+    }
+
+    public static Tile getTileWithName(String name){
+        for (Tile tile : tiles){
+            if (Objects.equals(tile.name, name)) {
                 return tile;
             }
         }
