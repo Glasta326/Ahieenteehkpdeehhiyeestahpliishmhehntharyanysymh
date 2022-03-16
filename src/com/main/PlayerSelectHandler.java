@@ -131,6 +131,11 @@ public class PlayerSelectHandler implements Initializable {
         else{
             cont.setDisable(false);
         }
+        System.out.println(readycount + " || " + playerCount);
+        if (readycount != playerCount){
+            cont.setDisable(true);
+        }
+
     }
 
     @FXML
