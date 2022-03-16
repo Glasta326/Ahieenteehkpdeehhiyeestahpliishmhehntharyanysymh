@@ -1,5 +1,5 @@
 package com.main;
-
+import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -84,6 +84,11 @@ public class GameBoardHandler implements Initializable {
     int diceNumber2;
     int currentPlayer;
     boolean hasRolled;
+    HashMap<String,String> errorMessages = new HashMap<String,String>();
+
+
+
+
 
     public void retrieveData(int playerCount){
         this.playerCount = playerCount;
@@ -91,6 +96,15 @@ public class GameBoardHandler implements Initializable {
 
     // Gets called when the player presses the "Continue to game button"
     public void initGame(Parent root, ArrayList<String> animals, Stage stage) throws URISyntaxException {
+        errorMessages.put("negativePop","Cannot enter a negative value");
+        errorMessages.put("emptyVal","Enter a value");
+        errorMessages.put("cannotAfford","Cannot afford");
+        errorMessages.put("negativePop","Cannot enter a negative value");
+        errorMessages.put("negativePop","Cannot enter a negative value");
+        errorMessages.put("negativePop","Cannot enter a negative value");
+
+
+
         Scene GameBoard = new Scene(root, 1280.0D, 720.0D);
         stage.setScene(GameBoard);
         Image img;
@@ -334,7 +348,7 @@ public class GameBoardHandler implements Initializable {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         Tile area = GameHandler.getTileWithName(areaSelectionBox.getValue());
         assert area != null;
-        if (currentPlayer.sparePopulation >= Integer.parseInt(addPopulationTextField.getText())) {
+        if (currentPlayer.sparePopulation >= Integer.parseInt(addPopulationTextField.getText()) && Integer.parseInt(addPopulationTextField.getText()) > 0){
             area.population += Integer.parseInt(addPopulationTextField.getText());
             currentPlayer.sparePopulation -= Integer.parseInt(addPopulationTextField.getText());
         }
@@ -348,7 +362,7 @@ public class GameBoardHandler implements Initializable {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         Tile area = GameHandler.getTileWithName(areaSelectionBox.getValue());
         assert area != null;
-        if (area.population >= Integer.parseInt(removePopulationTextField.getText())) {
+        if ((area.population >= Integer.parseInt(removePopulationTextField.getText()) && Integer.parseInt(removePopulationTextField.getText()) > 0)) {
             area.population -= Integer.parseInt(removePopulationTextField.getText());
             currentPlayer.sparePopulation += Integer.parseInt(removePopulationTextField.getText());
         }
