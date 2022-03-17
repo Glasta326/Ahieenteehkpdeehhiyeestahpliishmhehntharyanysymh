@@ -131,10 +131,6 @@ public class PlayerSelectHandler implements Initializable {
         else{
             cont.setDisable(false);
         }
-        System.out.println(readycount + " || " + playerCount);
-        if (readycount != playerCount){
-            cont.setDisable(true);
-        }
 
     }
 
@@ -147,45 +143,21 @@ public class PlayerSelectHandler implements Initializable {
             case "animalChoiceBox1" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox1.getValue() + ".jpg");
                 animalImage1.setImage(img);
-                if (animalChoiceBox1 != null) {
-                    readycount += 1;
-                }
-                if (readycount == playerCount) {
-                    cont.setDisable(false);
-                }
                 dochecks();
             }
             case "animalChoiceBox2" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox2.getValue() + ".jpg");
                 animalImage2.setImage(img);
-                if (animalChoiceBox2 != null) {
-                    readycount += 1;
-                }
-                if (readycount == playerCount) {
-                    cont.setDisable(false);
-                }
                 dochecks();
             }
             case "animalChoiceBox3" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox3.getValue() + ".jpg");
                 animalImage3.setImage(img);
-                if (animalChoiceBox3 != null) {
-                    readycount += 1;
-                }
-                if (readycount == playerCount) {
-                    cont.setDisable(false);
-                }
                 dochecks();
             }
             case "animalChoiceBox4" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox4.getValue() + ".jpg");
                 animalImage4.setImage(img);
-                if (animalChoiceBox4 != null) {
-                    readycount += 1;
-                }
-                if (readycount == playerCount) {
-                    cont.setDisable(false);
-                }
                 dochecks();
             }
         }

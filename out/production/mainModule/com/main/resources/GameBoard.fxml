@@ -283,24 +283,21 @@
          <Label fx:id="victoryChance" layoutX="141.0" layoutY="45.0" prefHeight="30.0" prefWidth="120.0" text="Victory Chance:" wrapText="true" />
          <Label fx:id="victoryChanceAnnex" layoutX="141.0" layoutY="80.0" prefHeight="30.0" prefWidth="120.0" text="Victory Chance:" wrapText="true" />
       </AnchorPane>
-      <ImageView fx:id="evolutionSlot1" fitHeight="90.0" fitWidth="90.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/GoldEvolution.png" />
-         </image>
+      <ImageView fx:id="evolutionSlot1" fitHeight="90.0" fitWidth="90.0" layoutY="590.0" pickOnBounds="true"
+                 preserveRatio="true">
+         <Image url="@images/GoldEvolution.png"/>
       </ImageView>
-      <ImageView fx:id="evolutionSlot2" fitHeight="90.0" fitWidth="90.0" layoutX="92.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/GoldEvolution.png" />
-         </image>
+      <ImageView fx:id="evolutionSlot2" fitHeight="90.0" fitWidth="90.0" layoutX="92.0" layoutY="590.0"
+                 pickOnBounds="true" preserveRatio="true">
+         <Image url="@images/GoldEvolution.png"/>
       </ImageView>
-      <ImageView fx:id="evolutionSlot3" fitHeight="90.0" fitWidth="90.0" layoutX="184.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/GoldEvolution.png" />
-         </image>
+      <ImageView fx:id="evolutionSlot3" fitHeight="90.0" fitWidth="90.0" layoutX="184.0" layoutY="590.0"
+                 pickOnBounds="true" preserveRatio="true">
+         <Image url="@images/GoldEvolution.png"/>
       </ImageView>
       <Label fx:id="evolutionLabel1" layoutX="5.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
-      <Label fx:id="evolutionLabel11" layoutX="97.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
-      <Label fx:id="evolutionLabel111" layoutX="189.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
+      <Label fx:id="evolutionLabel2" layoutX="97.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
+      <Label fx:id="evolutionLabel3" layoutX="189.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
    </AnchorPane>
    <Label fx:id="playersTurnLabel" layoutX="667.0" layoutY="113.0" prefHeight="35.0" prefWidth="500.0" text="Label" wrapText="true">
       <font>

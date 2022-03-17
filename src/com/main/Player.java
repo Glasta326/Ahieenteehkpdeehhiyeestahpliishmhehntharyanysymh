@@ -14,6 +14,7 @@ public class Player
     public int index;
     public int lives;
     public int turnsToMiss;
+    public int zooTurnsLeft;
 
     public void IncreasePopulation(){
         currentTile.population += 1; //replace 1 with actual amount
@@ -39,5 +40,6 @@ public class Player
         this.foodOutput = foodProduction - populationUpkeep;
         this.lives = 3;
         this.turnsToMiss = 0;
+        this.zooTurnsLeft = 0;
     }
 }

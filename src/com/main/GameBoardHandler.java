@@ -37,6 +37,12 @@ public class GameBoardHandler implements Initializable  {
     public Button attemptAnnex;
     public Label victoryChanceAnnex;
     public Label messageLabel;
+    public ImageView evolutionSlot1;
+    public ImageView evolutionSlot2;
+    public ImageView evolutionSlot3;
+    public Label evolutionLabel1;
+    public Label evolutionLabel2;
+    public Label evolutionLabel3;
     @FXML private Button diceRoller;
     @FXML private Button turnEnder;
     @FXML private Label infoCardTitle;
@@ -137,6 +143,12 @@ public class GameBoardHandler implements Initializable  {
             current.turnsToMiss -= 1;
             // Recursion !!!!!!!!!!!!!!!!!!!!!
             turnOver();
+        }else if (current.zooTurnsLeft != 0){
+            current.zooTurnsLeft -= 1;
+            // Recursion !!!!!!!!!!!!!!!!!!!!!
+            turnOver();
+        }else{
+            playersTurnLabel.setText(current.animal + "'s turn");
         }
         diceRoller.setDisable(false);
         turnEnder.setDisable(true);
@@ -144,7 +156,6 @@ public class GameBoardHandler implements Initializable  {
         current.food += current.foodOutput;
         changeInfoCard();
         changePlayerStats();
-        playersTurnLabel.setText(current.animal + "'s turn");
         purchaseTile.setDisable(true);
         areaSelectionBox.setValue(null);
         editableTilePane.setOpacity(0);
@@ -167,7 +178,11 @@ public class GameBoardHandler implements Initializable  {
             die1.setText(Integer.toString(diceNumber1));
             diceNumber2 = GameHandler.Rolldice();
             die2.setText(Integer.toString(diceNumber2));
+            hasRolled = true;
             movePlayer();
+            if (diceNumber1 == diceNumber2){
+                currentPlayer.zooTurnsLeft = 0;
+            }
             diceRoller.setDisable(true);
             currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
             assert currentTile != null;
@@ -176,7 +191,6 @@ public class GameBoardHandler implements Initializable  {
             }else{
                 turnEnder.setDisable(false);
             }
-            hasRolled = true;
         }
         diceRoller.setDisable(true);
     }
@@ -205,14 +219,40 @@ public class GameBoardHandler implements Initializable  {
             currentPlayer.index += 1;
             if (currentPlayer.index > 32 || currentPlayer.index == 32){
                 currentPlayer.index = 0;
-                currentPlayer.food += 500;
-            }
-            if (currentPlayer.index == 8){
-                currentPlayer.turnsToMiss += 1;
+                currentPlayer.food += 250;
             }
         }
         if ( currentPlayer.index == 0){
-            currentPlayer.food += 500;
+            currentPlayer.food += 250;
+        }
+        if (currentPlayer.index == 8){
+            currentPlayer.turnsToMiss += 1;
+        }
+        if (currentPlayer.index == 16){
+            currentPlayer.zooTurnsLeft += 3;
+        }
+        if (currentPlayer.index == 24){
+            long populationToKill = Math.round(currentPlayer.totalPopulation * 0.5);
+            if (currentPlayer.totalPopulation > populationToKill) {
+                // Checks if player has enough pop in spare to cover debt, if not takes from areas.
+                if (currentPlayer.sparePopulation > populationToKill) {
+                    currentPlayer.sparePopulation -= populationToKill;
+                } else {
+                    ArrayList<Tile> playersTiles = GameHandler.getTilesOwnedBy(currentPlayer);
+                    populationToKill -= currentPlayer.sparePopulation;
+                    currentPlayer.sparePopulation = 0;
+                    // Checks areas owned by the player from closest to start to end until and removes population until debt is paid off.
+                    for (Tile tile : playersTiles) {
+                        if (tile.population > populationToKill) {
+                            tile.population -= populationToKill;
+                            break;
+                        } else {
+                            populationToKill -= tile.population;
+                            tile.population = 0;
+                        }
+                    }
+                }
+            }
         }
         changePlayerStats();
         changeInfoCard();
@@ -263,10 +303,12 @@ public class GameBoardHandler implements Initializable  {
                     ownedTileButtonOptions.setDisable(false);
                     unownedTileButtonOptions.setOpacity(0);
                     unownedTileButtonOptions.setDisable(true);
-                    attemptFight.setDisable(false);
-                    surrender.setDisable(false);
-                    attemptAnnex.setDisable(false);
-                    surrenderCost.setText("Food Lost: "+currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / currentPlayer.sparePopulation)));
+                    if (hasRolled) {
+                        attemptFight.setDisable(false);
+                        surrender.setDisable(false);
+                        attemptAnnex.setDisable(false);
+                    }
+                    surrenderCost.setText("Food Lost: "+currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / (currentPlayer.sparePopulation + 1))));
                     long chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 1.1)) * currentPlayer.sparePopulation);
                     victoryChance.setText("Victory Chance: " + chance + "%");
                     chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 2.5)) * currentPlayer.sparePopulation);
@@ -288,7 +330,7 @@ public class GameBoardHandler implements Initializable  {
                 unownedTileButtonOptions.setDisable(false);
                 ownedTileButtonOptions.setOpacity(0);
                 ownedTileButtonOptions.setDisable(true);
-                purchaseTile.setDisable(currentPlayer.food <= currentTile.costs && !hasRolled);
+                purchaseTile.setDisable(currentPlayer.food < currentTile.costs || !hasRolled);
             }
 
         }
@@ -410,7 +452,7 @@ public class GameBoardHandler implements Initializable  {
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
         assert currentTile != null;
         Player tileOwner = GameHandler.getPlayerWithIndex(currentTile.getOwner());
-        int foodToGive = (currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / currentPlayer.sparePopulation))) * multiplier;
+        int foodToGive = (currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / (currentPlayer.sparePopulation + 1)))) * multiplier;
         assert tileOwner != null;
         // Checks if player has enough food in reserve to give
         if (currentPlayer.food > foodToGive){
@@ -446,13 +488,13 @@ public class GameBoardHandler implements Initializable  {
                 // Players gets eliminated (tile owner gains food equal to currentPlayers spare food and total population)
             }
         }
+        changeInfoCard();
+        changePlayerStats();
+        onAreaSelect();
         turnEnder.setDisable(false);
         surrender.setDisable(true);
         attemptAnnex.setDisable(true);
         attemptFight.setDisable(true);
-        changeInfoCard();
-        changePlayerStats();
-        onAreaSelect();
     }
 
     @FXML
@@ -466,7 +508,7 @@ public class GameBoardHandler implements Initializable  {
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
         assert currentTile != null;
         Player tileOwner = GameHandler.getPlayerWithIndex(currentTile.getOwner());
-        int foodToGive = currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / currentPlayer.sparePopulation));
+        int foodToGive = currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / (currentPlayer.sparePopulation + 1)));
         assert tileOwner != null;
         long chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 1.1)) * currentPlayer.sparePopulation);
         Random ran = new Random();
@@ -488,6 +530,10 @@ public class GameBoardHandler implements Initializable  {
         changeInfoCard();
         changePlayerStats();
         onAreaSelect();
+        turnEnder.setDisable(false);
+        surrender.setDisable(true);
+        attemptAnnex.setDisable(true);
+        attemptFight.setDisable(true);
     }
 
     @FXML
@@ -514,13 +560,13 @@ public class GameBoardHandler implements Initializable  {
             currentTile.population -= populationLost;
             changeMessageLabel("defeated", "RED");
         }
+        changeInfoCard();
+        changePlayerStats();
+        onAreaSelect();
         turnEnder.setDisable(false);
         surrender.setDisable(true);
         attemptAnnex.setDisable(true);
         attemptFight.setDisable(true);
-        changeInfoCard();
-        changePlayerStats();
-        onAreaSelect();
     }
 
     private void changeMessageLabel(String message, String clr){
