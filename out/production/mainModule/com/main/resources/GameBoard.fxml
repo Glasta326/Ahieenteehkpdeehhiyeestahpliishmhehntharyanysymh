@@ -283,17 +283,14 @@
          <Label fx:id="victoryChance" layoutX="141.0" layoutY="45.0" prefHeight="30.0" prefWidth="120.0" text="Victory Chance:" wrapText="true" />
          <Label fx:id="victoryChanceAnnex" layoutX="141.0" layoutY="80.0" prefHeight="30.0" prefWidth="120.0" text="Victory Chance:" wrapText="true" />
       </AnchorPane>
-      <ImageView fx:id="evolutionSlot1" fitHeight="90.0" fitWidth="90.0" layoutY="590.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <Image url="@images/GoldEvolution.png"/>
+      <ImageView fx:id="evolutionSlot1" fitHeight="90.0" fitWidth="90.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@images/GoldEvolution.png" />
       </ImageView>
-      <ImageView fx:id="evolutionSlot2" fitHeight="90.0" fitWidth="90.0" layoutX="92.0" layoutY="590.0"
-                 pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/GoldEvolution.png"/>
+      <ImageView fx:id="evolutionSlot2" fitHeight="90.0" fitWidth="90.0" layoutX="92.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@images/GoldEvolution.png" />
       </ImageView>
-      <ImageView fx:id="evolutionSlot3" fitHeight="90.0" fitWidth="90.0" layoutX="184.0" layoutY="590.0"
-                 pickOnBounds="true" preserveRatio="true">
-         <Image url="@images/GoldEvolution.png"/>
+      <ImageView fx:id="evolutionSlot3" fitHeight="90.0" fitWidth="90.0" layoutX="184.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@images/GoldEvolution.png" />
       </ImageView>
       <Label fx:id="evolutionLabel1" layoutX="5.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
       <Label fx:id="evolutionLabel2" layoutX="97.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
@@ -307,6 +304,12 @@
    <Label fx:id="messageLabel" layoutX="671.0" layoutY="148.0" prefHeight="70.0" prefWidth="500.0" wrapText="true">
       <font>
          <Font size="24.0" />
+      </font>
+   </Label>
+   <ChoiceBox fx:id="popGrowthRateChoiceBox" onAction="#changeBreedRate" layoutX="667.0" layoutY="273.0" prefHeight="25.0" prefWidth="207.0" />
+   <Label layoutX="667.0" layoutY="236.0" prefHeight="37.0" prefWidth="207.0" text="Select population growth rate">
+      <font>
+         <Font name="System Bold" size="12.0" />
       </font>
    </Label>
 </AnchorPane>

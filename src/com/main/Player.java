@@ -15,6 +15,7 @@ public class Player
     public int lives;
     public int turnsToMiss;
     public int zooTurnsLeft;
+    public double popGrowthRate;
 
     public void IncreasePopulation(){
         currentTile.population += 1; //replace 1 with actual amount
@@ -41,5 +42,6 @@ public class Player
         this.lives = 3;
         this.turnsToMiss = 0;
         this.zooTurnsLeft = 0;
+        this.popGrowthRate = 0.0;
     }
 }

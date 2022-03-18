@@ -43,6 +43,7 @@ public class GameBoardHandler implements Initializable  {
     public Label evolutionLabel1;
     public Label evolutionLabel2;
     public Label evolutionLabel3;
+    public ChoiceBox popGrowthRateChoiceBox;
     @FXML private Button diceRoller;
     @FXML private Button turnEnder;
     @FXML private Label infoCardTitle;
@@ -94,13 +95,17 @@ public class GameBoardHandler implements Initializable  {
     int currentPlayer;
     boolean hasRolled;
     HashMap<String,String> infoMessages = new HashMap<>();
-
+    @FXML private final ObservableList<String> growthRates = FXCollections.observableArrayList("No Breeding 0 %", "Light Breeding 5 %", "Average Breeding 10 %", "Competitive Breeding 15 %");
+    public double breedAmount;
+    
     public void retrieveData(int playerCount){
         this.playerCount = playerCount;
     }
 
     // Gets called when the player presses the "Continue to game button"
     public void initGame(Parent root, ArrayList<String> animals, Stage stage) throws URISyntaxException {
+        popGrowthRateChoiceBox.setItems(growthRates);
+        popGrowthRateChoiceBox.setValue("No Breeding 0 %");
         infoMessages.put("negativePop","Cannot enter a negative value!");
         infoMessages.put("emptyVal","Must enter a value!");
         infoMessages.put("cannotAfford","Cannot afford!");
@@ -143,10 +148,6 @@ public class GameBoardHandler implements Initializable  {
             current.turnsToMiss -= 1;
             // Recursion !!!!!!!!!!!!!!!!!!!!!
             turnOver();
-        }else if (current.zooTurnsLeft != 0){
-            current.zooTurnsLeft -= 1;
-            // Recursion !!!!!!!!!!!!!!!!!!!!!
-            turnOver();
         }else{
             playersTurnLabel.setText(current.animal + "'s turn");
         }
@@ -166,6 +167,12 @@ public class GameBoardHandler implements Initializable  {
     @FXML
 
     protected void endTurn() throws URISyntaxException {
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
+        System.out.println(currentPlayer.popGrowthRate);
+        if (currentPlayer.popGrowthRate > 0) {
+            currentPlayer.food *= 1 - currentPlayer.popGrowthRate;
+            currentPlayer.sparePopulation += currentPlayer.food * (currentPlayer.popGrowthRate) * 0.5;
+        }
         turnOver();
     }
 
@@ -182,6 +189,10 @@ public class GameBoardHandler implements Initializable  {
             movePlayer();
             if (diceNumber1 == diceNumber2){
                 currentPlayer.zooTurnsLeft = 0;
+            }else{
+                if (currentPlayer.zooTurnsLeft > 0){
+                    turnOver();
+                }
             }
             diceRoller.setDisable(true);
             currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
@@ -578,5 +589,16 @@ public class GameBoardHandler implements Initializable  {
         }
         messageLabel.setTextFill(colour);
         messageLabel.setText(infoMessages.get(message));
+    }
+    
+    @FXML
+    protected void changeBreedRate(){
+        Player currentPlayer = GameHandler.returnCurrentPlayer();
+        String string = (String) popGrowthRateChoiceBox.getValue();
+        String[] output = string.split(" ");
+        breedAmount = Integer.parseInt(output[2]) / 100.0;
+        if (currentPlayer != null) {
+            currentPlayer.popGrowthRate = breedAmount;
+        }
     }
 }
