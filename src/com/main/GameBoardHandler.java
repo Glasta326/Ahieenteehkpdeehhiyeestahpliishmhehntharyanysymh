@@ -266,8 +266,6 @@ public class GameBoardHandler implements Initializable  {
         else{
             multiplier = 1.0;
         }
-
-
         changePlayerStats();
         changeInfoCard();
     }
@@ -306,7 +304,7 @@ public class GameBoardHandler implements Initializable  {
             cost3.setText(Integer.toString((int) (currentTile.tierCosts.get(1) * multiplier)));
             cost4.setText(Integer.toString((int) (currentTile.tierCosts.get(2) * multiplier)));
             currentTierLabel.setText("Current Tier: " + currentTile.tier);
-            foodProdLabel.setText("Food Prod: " +  currentTile.foodProduction.get(0) + " | " + currentTile.foodProduction.get(1) + " | "  + currentTile.foodProduction.get(2) + " | "  + currentTile.foodProduction.get(3));
+            foodProdLabel.setText("Food Prod: " +  Math.ceil(currentTile.foodProduction.get(0)*(2-multiplier)) + " | " + Math.ceil(currentTile.foodProduction.get(1)*(2-multiplier)) + " | "  + Math.ceil(currentTile.foodProduction.get(2)*(2-multiplier)) + " | "  + Math.ceil(currentTile.foodProduction.get(3)*(2-multiplier)));
             foodStealLabel.setText("Food Steal: " + currentTile.foodSteal.get(0) + " | " + currentTile.foodSteal.get(1) + " | "  + currentTile.foodSteal.get(2) + " | "  + currentTile.foodSteal.get(3));
             currentPopulationLabel.setText("Current Population: " + currentTile.population);
             if (currentTile.owner != 0) {
@@ -368,7 +366,7 @@ public class GameBoardHandler implements Initializable  {
             assert currentTile != null;
             if (currentPlayer.food > currentTile.costs) {
                 currentPlayer.food -= currentTile.costs * multiplier;
-                currentPlayer.foodProduction += currentTile.foodProduction.get(0);
+                currentPlayer.foodProduction += currentTile.foodProduction.get(0) * (2-multiplier);
                 currentTile.tier = 1;
                 currentPlayer.updateFoodOutput();
                 currentTile.owner = currentPlayer.returnplayerNum();
@@ -425,8 +423,11 @@ public class GameBoardHandler implements Initializable  {
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
         assert currentTile != null;
         if (currentPlayer.food >= currentTile.tierCosts.get(currentTile.tier - 1) && currentTile.tier < 4){
+            currentPlayer.food -= currentTile.costs * multiplier;
             currentPlayer.food -= currentTile.tierCosts.get(currentTile.tier - 1) * multiplier;
             currentTile.tier += 1;
+            currentPlayer.foodProduction += currentTile.foodProduction.get(currentTile.tier-1) * (2-multiplier) - currentTile.foodProduction.get(currentTile.tier-2);
+
             changeInfoCard();
             changePlayerStats();
             onAreaSelect();
