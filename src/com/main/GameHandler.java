@@ -27,6 +27,14 @@ public class GameHandler {
 
     public static void main(String[] args) {
         turn = 1;
+        synergies.put("Cow","Savanna");
+        synergies.put("Pig","Grassland");
+        synergies.put("Penguin","Tundra");
+        synergies.put("Sloth","Jungle");
+        synergies.put("Hallucigenia","Marine");
+        synergies.put("Blue Dragon","Marine");
+        synergies.put("Basilisk","Jungle");
+        synergies.put("Probiscus Monkey","Jungle");
         Application.launch(GraphicsSetup.class, args);
     }
 
@@ -48,16 +56,12 @@ public class GameHandler {
         return randomNumber;
     }
 
+    public static String getSynergyFor(String animal){
+        return synergies.get(animal);
+    }
+
     // Is called when the "Continue to Game" button is pressed after players are selected
     public static void gameSetup(int playerNum, ArrayList<String> animals) throws IOException, URISyntaxException {
-        synergies.put("Cow","Savanna");
-        synergies.put("Pig","Grassland");
-        synergies.put("Penguin","Tundra");
-        synergies.put("Sloth","Jungle");
-        synergies.put("Hallucigenia","Marine");
-        synergies.put("Blue Dragon","Marine");
-        synergies.put("Basilisk","Jungle");
-        synergies.put("Probiscus Monkey","Jungle");
         playerCount = playerNum;
         // Creates player objects
         for (int i = 0; i < playerCount; i++) {

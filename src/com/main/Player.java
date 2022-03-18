@@ -16,6 +16,7 @@ public class Player
     public int turnsToMiss;
     public int zooTurnsLeft;
     public double popGrowthRate;
+    public String synergy;
 
     public void IncreasePopulation(){
         currentTile.population += 1; //replace 1 with actual amount
@@ -29,7 +30,7 @@ public class Player
         foodOutput = foodProduction - populationUpkeep;
     }
 
-    public Player(int playerNum, int food, String animal, int index, boolean hasRolled /*Tile currentTile*/) {
+    public Player(int playerNum, int food, String animal, int index, boolean hasRolled, String synergy) {
         this.playerNum = playerNum;
         this.food = food;
         this.animal = animal;
@@ -43,5 +44,6 @@ public class Player
         this.turnsToMiss = 0;
         this.zooTurnsLeft = 0;
         this.popGrowthRate = 0.0;
+        this.synergy = synergy;
     }
 }

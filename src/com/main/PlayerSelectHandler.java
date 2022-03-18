@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +25,10 @@ import java.util.ResourceBundle;
 
 public class PlayerSelectHandler implements Initializable {
     @FXML private final ObservableList<String> animals = FXCollections.observableArrayList("Cow", "Pig", "Penguin", "Sloth", "Hallucigenia", "Blue Dragon", "Basilisk", "Probiscus Monkey");
+    @FXML private Label Synergy1;
+    @FXML private Label Synergy2;
+    @FXML private Label Synergy3;
+    @FXML private Label Synergy4;
     @FXML private AnchorPane player1;
     @FXML private AnchorPane player2;
     @FXML private AnchorPane player3;
@@ -143,21 +148,25 @@ public class PlayerSelectHandler implements Initializable {
             case "animalChoiceBox1" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox1.getValue() + ".jpg");
                 animalImage1.setImage(img);
+                Synergy1.setText("Synergy: " + GameHandler.getSynergyFor(animalChoiceBox1.getValue()));
                 dochecks();
             }
             case "animalChoiceBox2" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox2.getValue() + ".jpg");
                 animalImage2.setImage(img);
+                Synergy2.setText("Synergy: " + GameHandler.getSynergyFor(animalChoiceBox2.getValue()));
                 dochecks();
             }
             case "animalChoiceBox3" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox3.getValue() + ".jpg");
                 animalImage3.setImage(img);
+                Synergy3.setText("Synergy: " + GameHandler.getSynergyFor(animalChoiceBox3.getValue()));
                 dochecks();
             }
             case "animalChoiceBox4" -> {
                 img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + animalChoiceBox4.getValue() + ".jpg");
                 animalImage4.setImage(img);
+                Synergy4.setText("Synergy: " + GameHandler.getSynergyFor(animalChoiceBox4.getValue()));
                 dochecks();
             }
         }
