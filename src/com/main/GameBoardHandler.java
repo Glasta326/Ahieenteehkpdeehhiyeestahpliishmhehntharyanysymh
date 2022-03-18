@@ -103,6 +103,7 @@ public class GameBoardHandler implements Initializable  {
     }
 
     // Gets called when the player presses the "Continue to game button"
+    // a
     public void initGame(Parent root, ArrayList<String> animals, Stage stage) throws URISyntaxException {
         popGrowthRateChoiceBox.setItems(growthRates);
         popGrowthRateChoiceBox.setValue("No Breeding 0 %");
