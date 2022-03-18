@@ -427,6 +427,7 @@ public class GameBoardHandler implements Initializable  {
                 cost4n2.setText(Integer.toString((int) (area.tierCosts.get(2) * multiplier)));
                 foodProdLabel.setText("Food Prod: " +  (int) (currentTile.foodProduction.get(0) * (2 - multiplier)) + " | " + (int) (currentTile.foodProduction.get(1) * (2 - multiplier)) + " | "  + (int) (currentTile.foodProduction.get(2) * (2 - multiplier)) + " | "  + (int) (currentTile.foodProduction.get(3) * (2 - multiplier)));
             }else{
+                System.out.println(area.tierCosts);
                 cost1n2.setText(Integer.toString(area.costs));
                 cost2n2.setText(Integer.toString(area.tierCosts.get(0)));
                 cost3n2.setText(Integer.toString(area.tierCosts.get(1)));

@@ -174,7 +174,7 @@
                      <Font name="System Bold" size="16.0" />
                   </font>
                </Label>
-               <Label fx:id="cost4n2" layoutX="128.0" layoutY="274.0" prefHeight="30.0" prefWidth="60.0" text="0">
+               <Label fx:id="cost3n2" layoutX="128.0" layoutY="274.0" prefHeight="30.0" prefWidth="60.0" text="0">
                   <font>
                      <Font name="System Bold" size="16.0" />
                   </font>
@@ -199,7 +199,7 @@
                      <Font name="System Bold" size="16.0" />
                   </font>
                </Label>
-               <Label fx:id="cost3n2" layoutX="188.0" layoutY="274.0" prefHeight="30.0" prefWidth="60.0" text="0">
+               <Label fx:id="cost4n2" layoutX="188.0" layoutY="274.0" prefHeight="30.0" prefWidth="60.0" text="0">
                   <font>
                      <Font name="System Bold" size="16.0" />
                   </font>
@@ -306,7 +306,7 @@
          <Font size="24.0" />
       </font>
    </Label>
-   <ChoiceBox fx:id="popGrowthRateChoiceBox" onAction="#changeBreedRate" layoutX="667.0" layoutY="273.0" prefHeight="25.0" prefWidth="207.0" />
+   <ChoiceBox fx:id="popGrowthRateChoiceBox" layoutX="667.0" layoutY="273.0" onAction="#changeBreedRate" prefHeight="25.0" prefWidth="207.0" />
    <Label layoutX="667.0" layoutY="236.0" prefHeight="37.0" prefWidth="207.0" text="Select population growth rate">
       <font>
          <Font name="System Bold" size="12.0" />
