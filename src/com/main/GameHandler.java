@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
-
+// Just holds a bunch of general use functions
 public class GameHandler {
     static HashMap<String,String> synergies = new HashMap<>();
 
