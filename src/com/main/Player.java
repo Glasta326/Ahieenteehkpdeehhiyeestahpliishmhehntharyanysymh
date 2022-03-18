@@ -1,7 +1,10 @@
 package com.main;
 
+import java.util.HashMap;
+
 public class Player
 {
+
     private final int playerNum;
     public int food;
     public int totalPopulation;
@@ -15,6 +18,7 @@ public class Player
     public int lives;
     public int turnsToMiss;
     public int zooTurnsLeft;
+    public String synergy;
 
     public void IncreasePopulation(){
         currentTile.population += 1; //replace 1 with actual amount
@@ -28,7 +32,7 @@ public class Player
         foodOutput = foodProduction - populationUpkeep;
     }
 
-    public Player(int playerNum, int food, String animal, int index, boolean hasRolled /*Tile currentTile*/) {
+    public Player(int playerNum, int food, String animal, int index, boolean hasRolled /*Tile currentTile*/, String synergy) {
         this.playerNum = playerNum;
         this.food = food;
         this.animal = animal;
@@ -41,5 +45,8 @@ public class Player
         this.lives = 3;
         this.turnsToMiss = 0;
         this.zooTurnsLeft = 0;
+        this.synergy = synergy;
     }
+
+
 }

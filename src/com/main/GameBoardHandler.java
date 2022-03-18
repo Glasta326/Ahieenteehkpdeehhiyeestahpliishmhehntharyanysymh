@@ -94,13 +94,14 @@ public class GameBoardHandler implements Initializable  {
     int currentPlayer;
     boolean hasRolled;
     HashMap<String,String> infoMessages = new HashMap<>();
-
+    public double multiplier = 0.9;
     public void retrieveData(int playerCount){
         this.playerCount = playerCount;
     }
 
     // Gets called when the player presses the "Continue to game button"
     public void initGame(Parent root, ArrayList<String> animals, Stage stage) throws URISyntaxException {
+        //warning messages to player
         infoMessages.put("negativePop","Cannot enter a negative value!");
         infoMessages.put("emptyVal","Must enter a value!");
         infoMessages.put("cannotAfford","Cannot afford!");
@@ -108,6 +109,9 @@ public class GameBoardHandler implements Initializable  {
         infoMessages.put("annexed", "Successfully annexed!");
         infoMessages.put("defeated", "You were defeated!");
         infoMessages.put("missedTurn", "Previous player missed their turn!");
+
+
+
         Scene GameBoard = new Scene(root, 1280.0D, 720.0D);
         stage.setScene(GameBoard);
         Image img;
@@ -254,6 +258,16 @@ public class GameBoardHandler implements Initializable  {
                 }
             }
         }
+        currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
+        assert currentTile != null;
+        if (Objects.equals(currentTile.type, currentPlayer.synergy)){
+            multiplier = 0.9;
+        }
+        else{
+            multiplier = 1.0;
+        }
+
+
         changePlayerStats();
         changeInfoCard();
     }
@@ -287,10 +301,10 @@ public class GameBoardHandler implements Initializable  {
         else {
             cardInfo.setOpacity(0);
             areaTileInfo.setOpacity(1);
-            cost1.setText(Integer.toString(currentTile.costs));
-            cost2.setText(Integer.toString(currentTile.tierCosts.get(0)));
-            cost3.setText(Integer.toString(currentTile.tierCosts.get(1)));
-            cost4.setText(Integer.toString(currentTile.tierCosts.get(2)));
+            cost1.setText(Integer.toString((int) (currentTile.costs * multiplier)));;
+            cost2.setText(Integer.toString((int) (currentTile.tierCosts.get(0) * multiplier)));
+            cost3.setText(Integer.toString((int) (currentTile.tierCosts.get(1) * multiplier)));
+            cost4.setText(Integer.toString((int) (currentTile.tierCosts.get(2) * multiplier)));
             currentTierLabel.setText("Current Tier: " + currentTile.tier);
             foodProdLabel.setText("Food Prod: " +  currentTile.foodProduction.get(0) + " | " + currentTile.foodProduction.get(1) + " | "  + currentTile.foodProduction.get(2) + " | "  + currentTile.foodProduction.get(3));
             foodStealLabel.setText("Food Steal: " + currentTile.foodSteal.get(0) + " | " + currentTile.foodSteal.get(1) + " | "  + currentTile.foodSteal.get(2) + " | "  + currentTile.foodSteal.get(3));
@@ -353,7 +367,7 @@ public class GameBoardHandler implements Initializable  {
         if (hasRolled) {
             assert currentTile != null;
             if (currentPlayer.food > currentTile.costs) {
-                currentPlayer.food -= currentTile.costs;
+                currentPlayer.food -= currentTile.costs * multiplier;
                 currentPlayer.foodProduction += currentTile.foodProduction.get(0);
                 currentTile.tier = 1;
                 currentPlayer.updateFoodOutput();
@@ -411,7 +425,7 @@ public class GameBoardHandler implements Initializable  {
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
         assert currentTile != null;
         if (currentPlayer.food >= currentTile.tierCosts.get(currentTile.tier - 1) && currentTile.tier < 4){
-            currentPlayer.food -= currentTile.tierCosts.get(currentTile.tier - 1);
+            currentPlayer.food -= currentTile.tierCosts.get(currentTile.tier - 1) * multiplier;
             currentTile.tier += 1;
             changeInfoCard();
             changePlayerStats();
