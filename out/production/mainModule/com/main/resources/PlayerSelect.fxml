@@ -16,7 +16,7 @@
     <Button fx:id="addPlayer" layoutX="546.0" layoutY="116.0" mnemonicParsing="false" onAction="#addPlayerButton" prefHeight="41.0" prefWidth="188.0" text="Add Player" />
    <Button fx:id="removePlayer" disable="true" layoutX="774.0" layoutY="116.0" mnemonicParsing="false" onAction="#removePlayerButton" prefHeight="41.0" prefWidth="188.0" text="Remove Player" />
    <Button fx:id="cont" disable="true" layoutX="546.0" layoutY="665.0" mnemonicParsing="false" onAction="#continueToGame" prefHeight="41.0" prefWidth="188.0" text="Continue" />
-   <AnchorPane fx:id="player1" layoutX="135.0" layoutY="176.0" opacity="0.0" prefHeight="410.0" prefWidth="230.0">
+   <AnchorPane fx:id="player1" layoutX="135.0" layoutY="176.0" opacity="0.0" prefHeight="466.0" prefWidth="230.0">
       <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 1" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="MT Extra" size="48.0" />
@@ -29,8 +29,13 @@
          </font>
       </Label>
       <ImageView fx:id="animalImage1" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
+      <Label id="player1" fx:id="Synergy1" layoutX="1.0" layoutY="412.0" prefHeight="54.0" prefWidth="230.0" text="Synergy: " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="MT Extra" size="18.0" />
+         </font>
+      </Label>
    </AnchorPane>
-   <AnchorPane fx:id="player2" layoutX="394.0" layoutY="176.0" opacity="0.0" prefHeight="410.0" prefWidth="230.0">
+   <AnchorPane fx:id="player2" layoutX="394.0" layoutY="176.0" opacity="0.0" prefHeight="466.0" prefWidth="230.0">
       <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 2" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="MT Extra" size="48.0" />
@@ -43,8 +48,13 @@
          </font>
       </Label>
       <ImageView fx:id="animalImage2" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
+      <Label id="player1" fx:id="Synergy2" layoutY="412.0" prefHeight="54.0" prefWidth="230.0" text="Synergy: " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="MT Extra" size="18.0" />
+         </font>
+      </Label>
    </AnchorPane>
-   <AnchorPane fx:id="player3" layoutX="656.0" layoutY="176.0" opacity="0.0" prefHeight="410.0" prefWidth="230.0">
+   <AnchorPane fx:id="player3" layoutX="656.0" layoutY="176.0" opacity="0.0" prefHeight="466.0" prefWidth="230.0">
       <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 3" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="MT Extra" size="48.0" />
@@ -57,8 +67,13 @@
          </font>
       </Label>
       <ImageView fx:id="animalImage3" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
+      <Label id="player1" fx:id="Synergy3" layoutY="412.0" prefHeight="54.0" prefWidth="230.0" text="Synergy: " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="MT Extra" size="18.0" />
+         </font>
+      </Label>
    </AnchorPane>
-   <AnchorPane fx:id="player4" layoutX="923.0" layoutY="176.0" opacity="0.0" prefHeight="410.0" prefWidth="230.0">
+   <AnchorPane fx:id="player4" layoutX="923.0" layoutY="176.0" opacity="0.0" prefHeight="466.0" prefWidth="230.0">
       <Label id="player1" layoutX="28.0" prefHeight="70.0" prefWidth="174.0" text="Player 4" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="MT Extra" size="48.0" />
@@ -71,5 +86,10 @@
          </font>
       </Label>
       <ImageView fx:id="animalImage4" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
+      <Label id="player1" fx:id="Synergy4" layoutY="413.0" prefHeight="54.0" prefWidth="230.0" text="Synergy: " textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="MT Extra" size="18.0" />
+         </font>
+      </Label>
    </AnchorPane>
 </AnchorPane>
