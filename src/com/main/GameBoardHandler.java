@@ -401,6 +401,9 @@ public class GameBoardHandler implements Initializable  {
             }
         }
         if (currentPlayer.index == 24){
+            if(currentPlayer.lives != 0) {
+                currentPlayer.lives -= 1;
+            }
             long populationToKill;
             if (currentPlayer.hasSurvivor) {
                 populationToKill = Math.round(currentPlayer.totalPopulation * 0.35);
@@ -458,7 +461,7 @@ public class GameBoardHandler implements Initializable  {
                 case "Evolution" -> cardInfo.setText("Land on evolution and receive a special evolution - these can be good or bad and you can have a maximum of 3 in effect at any given point!");
                 case "Miss Turn" -> cardInfo.setText("Land on Miss a Turn and you miss your next go - it moves onto the next player skipping over you!");
                 case "Zoo" -> cardInfo.setText("Land on Zoo and you stay in the Zoo for 3 turns or until you roll a double!");
-                case "Slaughterhouse" -> cardInfo.setText("Land on the Slaughterhouse and you lose one of you lives, lose 3 lives and you are out of the game!");
+                case "Slaughterhouse" -> cardInfo.setText("Landing on the slaughterhouse removes 50% of your entire population :(");
             }
             ownedTileButtonOptions.setOpacity(0);
             ownedTileButtonOptions.setDisable(true);
