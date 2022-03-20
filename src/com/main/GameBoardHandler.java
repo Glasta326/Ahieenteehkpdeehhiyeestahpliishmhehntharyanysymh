@@ -55,6 +55,7 @@ public class GameBoardHandler implements Initializable  {
     public Button evoSelectButton1;
     public Button evoSelectButton2;
     public Button evoSelectButton3;
+    public Label Title;
     @FXML private Button diceRoller;
     @FXML private Button turnEnder;
     @FXML private Label infoCardTitle;
@@ -257,6 +258,7 @@ public class GameBoardHandler implements Initializable  {
             current.updateFoodOutput();
             changeInfoCard();
             changePlayerStats();
+            popGrowthRateChoiceBox.setValue("No Breeding 0 %");
             purchaseTile.setDisable(true);
             areaSelectionBox.setValue(null);
             editableTilePane.setOpacity(0);
@@ -486,18 +488,26 @@ public class GameBoardHandler implements Initializable  {
                     ownedTileButtonOptions.setDisable(false);
                     unownedTileButtonOptions.setOpacity(0);
                     unownedTileButtonOptions.setDisable(true);
+                    System.out.println(hasRolled);
                     if (hasRolled) {
                         attemptFight.setDisable(false);
                         surrender.setDisable(false);
                         attemptAnnex.setDisable(false);
                     }
+                    double currentPlayerStrengthMulti = currentPlayer.cardStrengthMulti + currentPlayer.evolutionStrengthMulti;
+                    Player tileOwner = GameHandler.getPlayerWithIndex(currentTile.getOwner());
+                    assert tileOwner != null;
+                    double tileOwnerStrengthMulti = tileOwner.cardStrengthMulti + tileOwner.evolutionStrengthMulti;
                     surrenderCost.setText("Food Lost: "+currentTile.foodSteal.get(currentTile.tier - 1) * (1+(currentTile.population / (currentPlayer.sparePopulation + 1))));
-                    long chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 1.1)) * currentPlayer.sparePopulation);
+                    System.out.println(currentTile.population);
+                    System.out.println((100 / (currentPlayer.sparePopulation * currentPlayerStrengthMulti + ((currentTile.population * tileOwnerStrengthMulti) * 2.0) ) * currentPlayer.sparePopulation * currentPlayerStrengthMulti));
+                    long chance = Math.round((100 / (currentPlayer.sparePopulation * currentPlayerStrengthMulti + ((currentTile.population * tileOwnerStrengthMulti) * 2.0) ) * currentPlayer.sparePopulation * currentPlayerStrengthMulti));
                     victoryChance.setText("Victory Chance: " + chance + "%");
-                    chance = Math.round((100 / (currentPlayer.sparePopulation + currentTile.population * 2.5)) * currentPlayer.sparePopulation);
+                    chance = Math.round((100 / (currentPlayer.sparePopulation * currentPlayerStrengthMulti + ((currentTile.population * tileOwnerStrengthMulti) * 10.0) ) * currentPlayer.sparePopulation * currentPlayerStrengthMulti));
                     victoryChanceAnnex.setText("Victory Chance: " + chance + "%");
                 }
                 else{
+                    ownerLabel.setText("Owner: " + Objects.requireNonNull(GameHandler.getPlayerWithIndex(currentTile.getOwner())).animal);
                     ownedTileButtonOptions.setOpacity(0);
                     ownedTileButtonOptions.setDisable(true);
                     unownedTileButtonOptions.setOpacity(0);
@@ -569,7 +579,7 @@ public class GameBoardHandler implements Initializable  {
             tileInfoCard1.setImage(img);
             infoCardTitle1.setText(area.name);
             areaTileInfo1.setOpacity(1);
-
+            System.out.println(area.tier);
             currentTierLabel1.setText("Current Tier: " + area.tier);
             if (Objects.equals(currentPlayer.synergy, currentTile.type)){
                 cost1n2.setText(Integer.toString((int) (area.costs * multiplier)));
@@ -603,13 +613,13 @@ public class GameBoardHandler implements Initializable  {
     @FXML
     protected void upgradeTile() throws URISyntaxException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
-        currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
-        assert currentTile != null;
-        if (currentPlayer.food >= currentTile.tierCosts.get(currentTile.tier) * multiplier){
-            if (currentTile.tier < 4) {
-                currentPlayer.food -= currentTile.tierCosts.get(currentTile.tier) * multiplier;
-                currentPlayer.foodProduction += (currentTile.foodProduction.get(currentTile.tier)) * currentPlayer.evolutionFoodProductionMulti;
-                currentTile.tier += 1;
+        Tile area = GameHandler.getTileWithName(areaSelectionBox.getValue());
+        assert area != null;
+        if (currentPlayer.food >= area.tierCosts.get(area.tier) * multiplier){
+            if (area.tier < 4) {
+                currentPlayer.food -= area.tierCosts.get(area.tier) * multiplier;
+                currentPlayer.foodProduction += (area.foodProduction.get(area.tier)) * currentPlayer.evolutionFoodProductionMulti;
+                area.tier += 1;
                 currentPlayer.updateFoodOutput();
                 changeInfoCard();
                 changePlayerStats();
@@ -715,7 +725,7 @@ public class GameBoardHandler implements Initializable  {
         Player tileOwner = GameHandler.getPlayerWithIndex(currentTile.getOwner());
         assert tileOwner != null;
         double tileOwnerStrengthMulti = tileOwner.cardStrengthMulti + tileOwner.evolutionStrengthMulti;
-        long chance = Math.round((100 / (currentPlayer.sparePopulation * currentPlayerStrengthMulti + currentTile.population * 1.25 * tileOwnerStrengthMulti)) * currentPlayer.sparePopulation);
+        long chance = Math.round((100 / (currentPlayer.sparePopulation * currentPlayerStrengthMulti + (currentTile.population * tileOwnerStrengthMulti) * 2)) * currentPlayer.sparePopulation * currentPlayerStrengthMulti);
         Random ran = new Random();
         int randomNumber = ran.nextInt(100) + 1;
         if (randomNumber <= chance){
@@ -725,17 +735,19 @@ public class GameBoardHandler implements Initializable  {
             currentTile.population -= populationLost;
             changeMessageLabel("victory", "GREEN");
         }else{
-            giveFood(2);
             long populationLost = Math.round((1 - (chance / 100.0)) * 0.3 * currentPlayer.sparePopulation);
             currentPlayer.sparePopulation -= populationLost;
             populationLost = Math.round(((chance / 100.0)) * 0.05 * currentTile.population);
             currentTile.population -= populationLost;
+            giveFood(2);
             changeMessageLabel("defeated", "RED");
         }
         currentPlayer.calculateTotalPopulation();
         tileOwner.calculateTotalPopulation();
         checkIfEliminated(currentPlayer);
         checkIfEliminated(tileOwner);
+        currentPlayer.cardStrengthMulti = 1.0;
+        tileOwner.cardStrengthMulti = 1.0;
         changeInfoCard();
         changePlayerStats();
         onAreaSelect();
@@ -754,14 +766,14 @@ public class GameBoardHandler implements Initializable  {
         Player tileOwner = GameHandler.getPlayerWithIndex(currentTile.getOwner());
         assert tileOwner != null;
         double tileOwnerStrengthMulti = tileOwner.cardStrengthMulti + tileOwner.evolutionStrengthMulti;
-        long chance = Math.round((100 / (currentPlayer.sparePopulation * currentPlayerStrengthMulti + currentTile.population * 5.0 * tileOwnerStrengthMulti)) * currentPlayer.sparePopulation);
+        long chance = Math.round( (100 / (currentPlayer.sparePopulation * currentPlayerStrengthMulti + ((currentTile.population * tileOwnerStrengthMulti) * 10.0))) * currentPlayer.sparePopulation * currentPlayerStrengthMulti);
         Random ran = new Random();
         int randomNumber = ran.nextInt(100) + 1;
         if (randomNumber <= chance){
             long populationLost = Math.round((1 - (chance / 100.0)) * 0.1 * currentPlayer.sparePopulation);
             currentPlayer.sparePopulation -= populationLost;
             populationLost = Math.round(((chance / 100.0)) * 0.8 * currentTile.population);
-            currentTile.population -= populationLost;
+            currentTile.population = 0;
             currentTile.owner = currentPlayer.returnplayerNum();
             if (Objects.equals(tileOwner.synergy, currentTile.type)){
                 tileOwner.foodOutput -= (int) (currentTile.foodProduction.get(currentTile.tier) * 1.1 * tileOwner.evolutionFoodProductionMulti);
@@ -784,6 +796,7 @@ public class GameBoardHandler implements Initializable  {
             currentPlayer.sparePopulation -= populationLost;
             populationLost = Math.round(((chance / 100.0)) * 0.1 * currentTile.population);
             currentTile.population -= populationLost;
+            giveFood(2);
             changeMessageLabel("defeated", "RED");
         }
         currentPlayer.calculateTotalPopulation();
@@ -791,6 +804,8 @@ public class GameBoardHandler implements Initializable  {
         checkIfEliminated(currentPlayer);
         checkIfEliminated(tileOwner);
         currentPlayer.updateFoodOutput();
+        currentPlayer.cardStrengthMulti = 1.0;
+        tileOwner.cardStrengthMulti = 1.0;
         changeInfoCard();
         changePlayerStats();
         onAreaSelect();
@@ -818,7 +833,7 @@ public class GameBoardHandler implements Initializable  {
             player.isEliminated = true;
         }
         int eliminatedPlayers = 0;
-        String winnersAnimal;
+        String winnersAnimal = Objects.requireNonNull(GameHandler.getPlayerWithIndex(1)).animal;
         for (int i = 0; i < playerCount; i++) {
             if (Objects.requireNonNull(GameHandler.getPlayerWithIndex(i+1)).isEliminated){
                 eliminatedPlayers += 1;
@@ -831,6 +846,7 @@ public class GameBoardHandler implements Initializable  {
             Parent root = loader.load();
             Scene GameBoard = new Scene(root, 1280.0D, 720.0D);
             currentStage.setScene(GameBoard);
+            Title.setText(winnersAnimal);
         }
     }
 
@@ -854,8 +870,22 @@ public class GameBoardHandler implements Initializable  {
 
     private int getRandomEvolution(Player player) throws URISyntaxException {
         Random random = new Random();
-        int ranNum = random.nextInt(cards.length);
-        String[] evolution = evolutions[ranNum];
+        int ind = 0;
+        int ranNum = random.nextInt(100) + 1;
+        int totalChance = 100;
+        String[] evolution = evolutions[0];
+        System.out.println(ranNum);
+        for (int i = 0; i < evolutions.length; i++) {
+            System.out.println(totalChance - Integer.parseInt(evolutions[i][3]));
+            if (ranNum > totalChance - Integer.parseInt(evolutions[i][3])){
+                evolution = evolutions[i];
+                ind = i;
+                break;
+            }
+            else{
+                totalChance -= Integer.parseInt(evolutions[i][3]);
+            }
+        }
         switch (evolution[4]) {
             case "food" -> player.evolutionFoodConsumptionMulti += Double.parseDouble(evolution[5]);
             case "foodProd" -> player.evolutionFoodProductionMulti += Double.parseDouble(evolution[5]);
@@ -873,7 +903,7 @@ public class GameBoardHandler implements Initializable  {
         tempEvoInfoLabel.setText(evolution[1]);
         Image img = new Image(Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("images")).toURI() + evolution[2] + "Evolution.png");
         tempEvolutionSlot.setImage(img);
-        return ranNum;
+        return ind;
     }
 
     private void drawEvolution(Player player) throws URISyntaxException, IOException {
