@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -15,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
@@ -111,6 +113,7 @@ public class GameBoardHandler implements Initializable  {
     public double multiplier;
     public boolean rolledDouble;
     public boolean choosingEvo;
+    Stage currentStage;
 
     public String[][] cards = {
             {"A small but welcome gift from the humans - 20 extra food", "20", "food"},
@@ -169,6 +172,7 @@ public class GameBoardHandler implements Initializable  {
         infoMessages.put("rolledDouble", "You rolled a double, and drew a card");
         infoMessages.put("evolved", "You landed on an evolution tile and evolved!");
         Scene GameBoard = new Scene(root, 1280.0D, 720.0D);
+        currentStage = stage;
         stage.setScene(GameBoard);
         Image img;
         playerCharacters.add(playerChar1);
@@ -191,7 +195,7 @@ public class GameBoardHandler implements Initializable  {
     }
 
     // Activates after the player presses the end turn button, can only be activated after the player has rolled the dice, or if player misses their turn.
-    private void turnOver() throws URISyntaxException, InterruptedException {
+    private void turnOver() throws URISyntaxException, InterruptedException, IOException {
 
 
         Player current = GameHandler.returnCurrentPlayer();
@@ -272,7 +276,7 @@ public class GameBoardHandler implements Initializable  {
 
     @FXML
     // Is called when the player clicks the "End turn button"
-    protected void endTurn() throws URISyntaxException, InterruptedException {
+    protected void endTurn() throws URISyntaxException, InterruptedException, IOException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         // Checks if the player is not in zoo, and has a growth rate set, and increases the population accordingly
         if (currentPlayer.popGrowthRate > 0 && currentPlayer.zooTurnsLeft == 0) {
@@ -286,7 +290,7 @@ public class GameBoardHandler implements Initializable  {
     }
 
     @FXML
-    protected void rollDice() throws URISyntaxException, InterruptedException {
+    protected void rollDice() throws URISyntaxException, InterruptedException, IOException {
         // checks to see if player has already rolled dice, then rolls dice
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         if (!hasRolled) {
@@ -340,7 +344,7 @@ public class GameBoardHandler implements Initializable  {
     }
 
     // When a player rolls dice, moves their character the appropriate number of spaces.
-    private void movePlayer() throws URISyntaxException {
+    private void movePlayer() throws URISyntaxException, IOException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         for (int i = 0; i < spacesToMove; i++) {
             // Checks to see what lane of the board they are on and moves accordingly
@@ -362,6 +366,8 @@ public class GameBoardHandler implements Initializable  {
                 currentPlayer.food += 250;
             }
         }
+        currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
+        assert currentTile != null;
         if (currentTile.getOwner() != 0 && currentTile.getOwner() != currentPlayer.returnplayerNum()){
             turnEnder.setDisable(true);
         }else{
@@ -644,7 +650,7 @@ public class GameBoardHandler implements Initializable  {
         onAreaSelect();
     }
 
-    private void giveFood(int multi) throws URISyntaxException {
+    private void giveFood(int multi) throws URISyntaxException, IOException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
         assert currentTile != null;
@@ -696,12 +702,12 @@ public class GameBoardHandler implements Initializable  {
     }
 
     @FXML
-    protected void surrender() throws URISyntaxException {
+    protected void surrender() throws URISyntaxException, IOException {
         giveFood(1);
     }
 
     @FXML
-    protected void fight() throws URISyntaxException {
+    protected void fight() throws URISyntaxException, IOException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         double currentPlayerStrengthMulti = currentPlayer.cardStrengthMulti + currentPlayer.evolutionStrengthMulti;
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
@@ -740,7 +746,7 @@ public class GameBoardHandler implements Initializable  {
     }
 
     @FXML
-    protected void annex() throws URISyntaxException {
+    protected void annex() throws URISyntaxException, IOException {
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         double currentPlayerStrengthMulti = currentPlayer.cardStrengthMulti + currentPlayer.evolutionStrengthMulti;
         currentTile = GameHandler.getTileWithIndex(currentPlayer.index + 1);
@@ -805,15 +811,30 @@ public class GameBoardHandler implements Initializable  {
         messageLabel.setText(infoMessages.get(message));
     }
 
-    private void checkIfEliminated(Player player){
-        if (player.totalPopulation <= 0){
+    private void checkIfEliminated(Player player) throws IOException {
+        if (player.totalPopulation <= 20){
             System.out.println(player.animal + " has been eliminated");
             playerCharacters.get(player.index).setOpacity(0);
             player.isEliminated = true;
         }
+        int eliminatedPlayers = 0;
+        String winnersAnimal;
+        for (int i = 0; i < playerCount; i++) {
+            if (Objects.requireNonNull(GameHandler.getPlayerWithIndex(i+1)).isEliminated){
+                eliminatedPlayers += 1;
+            }else{
+                winnersAnimal = Objects.requireNonNull(GameHandler.getPlayerWithIndex(i+1)).animal;
+            }
+        }
+        if (eliminatedPlayers == playerCount - 1){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(("resources/GameBoard.fxml")));
+            Parent root = loader.load();
+            Scene GameBoard = new Scene(root, 1280.0D, 720.0D);
+            currentStage.setScene(GameBoard);
+        }
     }
 
-    public void drawCard(Player player){
+    public void drawCard(Player player) throws IOException {
         Random random = new Random();
         int ranNum = random.nextInt(cards.length);
         String[] card = cards[ranNum];
@@ -855,7 +876,7 @@ public class GameBoardHandler implements Initializable  {
         return ranNum;
     }
 
-    private void drawEvolution(Player player) throws URISyntaxException {
+    private void drawEvolution(Player player) throws URISyntaxException, IOException {
         choosingEvo = true;
         if (player.evolutionIndexes.size() != 3){
             turnEnder.setDisable(false);
