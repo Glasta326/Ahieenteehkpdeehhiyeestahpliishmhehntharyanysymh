@@ -14,7 +14,6 @@ public class Player
     private Tile currentTile;
     public final String animal;
     public int index;
-    public int lives;
     public int turnsToMiss;
     public int zooTurnsLeft;
     public double cardStrengthMulti;
@@ -68,7 +67,6 @@ public class Player
         this.populationUpkeep = (int)Math.floor(totalPopulation * 0.5);
         this.foodProduction = 50;
         this.foodOutput = foodProduction - (int) populationUpkeep;
-        this.lives = 3;
         this.turnsToMiss = 0;
         this.zooTurnsLeft = 0;
         this.popGrowthRate = 0.0;

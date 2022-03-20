@@ -67,6 +67,7 @@ public class PlayerSelectHandler implements Initializable {
 
     @FXML
     protected void addPlayerButton() {
+        // Disables and enables add and remove buttons accordingly (if 4 players, add is disabled and vice versa)
         cont.setDisable(true);
         playerCount += 1;
         switch (playerCount) {
@@ -98,6 +99,7 @@ public class PlayerSelectHandler implements Initializable {
 
     @FXML
     protected void removePlayerButton() {
+        // Disables and enables add and remove buttons accordingly (if 0 players, remove is disabled and vice versa)
         switch (playerCount) {
             case 1 -> {
                 animalChoiceBox1.setValue(null);
@@ -124,6 +126,7 @@ public class PlayerSelectHandler implements Initializable {
         dochecks();
     }
     public void dochecks(){
+        // Checks if any of the animals are the same
         if (Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox2.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox3.getValue()) || Objects.equals(animalChoiceBox1.getValue(), animalChoiceBox4.getValue()) && animalChoiceBox1.getValue() != null){
             cont.setDisable(true);
         }
