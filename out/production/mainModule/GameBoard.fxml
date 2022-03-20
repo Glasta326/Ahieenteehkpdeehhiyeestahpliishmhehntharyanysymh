@@ -283,18 +283,30 @@
          <Label fx:id="victoryChance" layoutX="141.0" layoutY="45.0" prefHeight="30.0" prefWidth="120.0" text="Victory Chance:" wrapText="true" />
          <Label fx:id="victoryChanceAnnex" layoutX="141.0" layoutY="80.0" prefHeight="30.0" prefWidth="120.0" text="Victory Chance:" wrapText="true" />
       </AnchorPane>
-      <ImageView fx:id="evolutionSlot1" fitHeight="90.0" fitWidth="90.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="evolutionSlot1" fitHeight="90.0" fitWidth="90.0" layoutY="590.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@images/GoldEvolution.png" />
       </ImageView>
-      <ImageView fx:id="evolutionSlot2" fitHeight="90.0" fitWidth="90.0" layoutX="92.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="evolutionSlot2" fitHeight="90.0" fitWidth="90.0" layoutX="92.0" layoutY="590.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@images/GoldEvolution.png" />
       </ImageView>
-      <ImageView fx:id="evolutionSlot3" fitHeight="90.0" fitWidth="90.0" layoutX="184.0" layoutY="590.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="evolutionSlot3" fitHeight="90.0" fitWidth="90.0" layoutX="184.0" layoutY="590.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@images/GoldEvolution.png" />
       </ImageView>
-      <Label fx:id="evolutionLabel1" layoutX="5.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
-      <Label fx:id="evolutionLabel2" layoutX="97.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
-      <Label fx:id="evolutionLabel3" layoutX="189.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true" />
+      <Label fx:id="evolutionLabel1" layoutX="5.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label fx:id="evolutionLabel2" layoutX="97.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label fx:id="evolutionLabel3" layoutX="189.0" layoutY="595.0" prefHeight="80.0" prefWidth="80.0" wrapText="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Button fx:id="evoSelectButton1" layoutY="590.0" mnemonicParsing="false" onAction="#evoButtonPress" opacity="0.0" prefHeight="90.0" prefWidth="90.0" />
+      <Button fx:id="evoSelectButton2" layoutX="92.0" layoutY="590.0" mnemonicParsing="false" onAction="#evoButtonPress" opacity="0.0" prefHeight="90.0" prefWidth="90.0" />
+      <Button fx:id="evoSelectButton3" layoutX="184.0" layoutY="590.0" mnemonicParsing="false" onAction="#evoButtonPress" opacity="0.0" prefHeight="90.0" prefWidth="90.0" />
    </AnchorPane>
    <Label fx:id="playersTurnLabel" layoutX="667.0" layoutY="113.0" prefHeight="35.0" prefWidth="500.0" text="Label" wrapText="true">
       <font>
@@ -312,4 +324,33 @@
          <Font name="System Bold" size="12.0" />
       </font>
    </Label>
+   <ImageView fitHeight="251.0" fitWidth="174.0" layoutX="995.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@images/TileInfoCard.png" />
+   </ImageView>
+   <Label layoutX="1005.0" layoutY="242.0" prefHeight="25.0" prefWidth="152.0" text="Roll Double Cards">
+      <font>
+         <Font name="System Bold" size="16.0" />
+      </font>
+   </Label>
+   <Label fx:id="rollDoubleInfoLabel" layoutX="1011.0" layoutY="286.0" prefHeight="115.0" prefWidth="139.0" wrapText="true">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <AnchorPane fx:id="tempEvoPane" layoutX="646.0" layoutY="396.0" opacity="0.0" prefHeight="200.0" prefWidth="200.0">
+      <ImageView fx:id="tempEvolutionSlot" fitHeight="185.0" fitWidth="185.0" layoutX="8.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@images/GoldEvolution.png" />
+      </ImageView>
+      <Label fx:id="tempEvoTitleLabel" layoutX="21.0" layoutY="14.0" prefHeight="41.0" prefWidth="159.0" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="tempEvoInfoLabel" layoutX="21.0" layoutY="56.0" prefHeight="90.0" prefWidth="159.0" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="clickEvoReplaceLabel" layoutX="21.0" layoutY="145.0" opacity="0.0" prefHeight="41.0" prefWidth="159.0" text="(Click evolution you would like to replace)" wrapText="true" />
+   </AnchorPane>
 </AnchorPane>
