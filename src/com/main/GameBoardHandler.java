@@ -254,6 +254,8 @@ public class GameBoardHandler implements Initializable  {
             }
             current.calculateTotalPopulation();
             current.updateFoodOutput();
+            current.totalPopulation -= 85;
+            checkIfEliminated(current);
             changeInfoCard();
             changePlayerStats();
             popGrowthRateChoiceBox.setValue("No Breeding 0 %");
@@ -288,7 +290,7 @@ public class GameBoardHandler implements Initializable  {
     }
 
     @FXML
-    protected void rollDice() throws URISyntaxException, InterruptedException, IOException {
+    protected int rollDice() throws URISyntaxException, InterruptedException, IOException {
         // checks to see if player has already rolled dice, then rolls dice
         Player currentPlayer = GameHandler.returnCurrentPlayer();
         if (!hasRolled) {
@@ -328,6 +330,7 @@ public class GameBoardHandler implements Initializable  {
                     }else{
                         changeMessageLabel("trapped", "RED");
                         turnOver();
+                        return 0;
                         }
                     }
                 }
@@ -335,6 +338,7 @@ public class GameBoardHandler implements Initializable  {
             // Moves the player to the correct tile.
             movePlayer();
             diceRoller.setDisable(true);
+            return 0;
     }
 
     @Override
@@ -553,7 +557,7 @@ public class GameBoardHandler implements Initializable  {
         // Checks that the player has rolled the dice already, and has enough food to purchase area
         if (hasRolled) {
             assert currentTile != null;
-            if (currentPlayer.food > currentTile.costs * multiplier) {
+            if (currentPlayer.food >= currentTile.costs * multiplier) {
                 currentPlayer.food -= currentTile.costs * multiplier;
                 currentPlayer.foodProduction += currentTile.foodProduction.get(0) * currentPlayer.evolutionFoodProductionMulti;
                 currentTile.tier = 1;
@@ -868,11 +872,11 @@ public class GameBoardHandler implements Initializable  {
             }
         }
         if (eliminatedPlayers == playerCount - 1){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(("resources/GameBoard.fxml")));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(("resources/WinnerScreen.fxml")));
             Parent root = loader.load();
             Scene GameBoard = new Scene(root, 1280.0D, 720.0D);
             currentStage.setScene(GameBoard);
-            Title.setText(winnersAnimal);
+            Title.setText(winnersAnimal + "is the winner");
         }
     }
 
